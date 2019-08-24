@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+  <display-name>les-codigo</display-name>
+  <servlet>
+    <servlet-name>CadastrarProduto</servlet-name>
+    <servlet-class>br.com.les.servlet.Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CadastrarProduto</servlet-name>
+    <url-pattern>/CadastrarProduto</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>PesquisarProduto</servlet-name>
+    <servlet-class>br.com.les.servlet.Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PesquisarProduto</servlet-name>
+    <url-pattern>/PesquisarProduto</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>PreAlterarProduto</servlet-name>
+    <servlet-class>br.com.les.servlet.Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PreAlterarProduto</servlet-name>
+    <url-pattern>/PreAlterarProduto</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>AlterarProduto</servlet-name>
+    <servlet-class>br.com.les.servlet.Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AlterarProduto</servlet-name>
+    <url-pattern>/AlterarProduto</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>CadastrarCliente</servlet-name>
+    <servlet-class>br.com.les.servlet.Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CadastrarCliente</servlet-name>
+    <url-pattern>/CadastrarCliente</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>PesquisarCliente</servlet-name>
+    <servlet-class>br.com.les.servlet.Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PesquisarCliente</servlet-name>
+    <url-pattern>/PesquisarCliente</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>PreAlterarCliente</servlet-name>
+    <servlet-class>br.com.les.servlet.Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PreAlterarCliente</servlet-name>
+    <url-pattern>/PreAlterarCliente</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>AlterarCliente</servlet-name>
+    <servlet-class>br.com.les.servlet.Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AlterarCliente</servlet-name>
+    <url-pattern>/AlterarCliente</url-pattern>
+  </servlet-mapping>
+  
+  
+  
+  <servlet>
+    <servlet-name>UsuarioLogin</servlet-name>
+    <servlet-class>br.com.les.servlet.ServletLogin</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UsuarioLogin</servlet-name>
+    <url-pattern>/UsuarioLogin</url-pattern>
+  </servlet-mapping>
+  
+  
+  
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+</web-app>
