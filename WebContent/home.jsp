@@ -31,7 +31,7 @@
                     <li><a href="site_menu_carrinho.html" style="font-size: 15px">Carrinho</a></li>
 					<li><a href="site_meus_pedidos.html" style="font-size: 15px">Meus Pedidos</a></li>
                     <li><a href="site_meus_cupons.html" style="font-size: 15px">Meus Cupons</a></li>
-					<li><a href="minha-conta.html" style="font-size: 15px">Minha Conta</a></li>
+					<li><a href="PreAlterarCliente?txt_NmCodigo=PED00007&operacao=PREALTERAR&view=cliente" style="font-size: 15px">Minha Conta</a></li>
 					<li><a href="login.jsp" style="font-size: 15px">Login</a></li>
 				</ul>
 			</div>

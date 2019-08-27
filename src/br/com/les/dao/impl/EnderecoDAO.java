@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.les.dao.ConnectionFactory;
@@ -85,7 +86,7 @@ public class EnderecoDAO implements IDAO {
 	}
 
 	@Override
-	public EntidadeDominio prealterar(EntidadeDominio entidade) {
+	public List<EntidadeDominio> prealterar(EntidadeDominio entidade) {
 		System.out.println("dao prealterar");
         Connection con=null;
 
@@ -101,35 +102,69 @@ public class EnderecoDAO implements IDAO {
         ResultSet rs = null;
         //cast de Peca
         Endereco e = (Endereco) entidade;
-        Endereco endereco = new Endereco();
+        List<EntidadeDominio> enderecos = new ArrayList<>();
+        
         
         //comando SQL a ser feito
         
         String filtro = Integer.toString(e.getId());
-        String sql = "SELECT * FROM endereco WHERE endereco.id_endereco like '%" + filtro+"%'";
-        System.out.println("filtro: "+filtro);
-        System.out.println("sql: "+sql);
         try {
+        	String sql = "SELECT * FROM endereco WHERE endereco.id_endereco like '%" + filtro+"%'";
+            System.out.println("filtro: "+filtro);
+            System.out.println("sql: "+sql);
+            
         	System.out.println("dentro de try");
             //comando inserido no SGBD
             stmt = con.prepareStatement(sql);
-            System.out.println("statement");
+            System.out.println("statement: "+stmt);
             //stmt.setString(1, filtro);
             System.out.println("antes de execute");
             rs = stmt.executeQuery();
-            System.out.println("rs: ");
+            System.out.println("rs: "+rs.next());
             System.out.println("depois de execute");
+            System.out.println("-----------------");
+            System.out.println("teste2: "+rs.getInt("endereco.id_endereco"));
+            System.out.println("teste2rua: "+rs.getString("endereco.rua"));
             //lendo vários dados
+            //if(rs.next()) {
+	            Cidade cidade = new Cidade();
+	        	Estado estado = new Estado();
+	        	Endereco endereco = new Endereco();
+	                    
+	        	
+	        	endereco.setId(rs.getInt("endereco.id_endereco"));
+	            endereco.setRua(rs.getString("endereco.rua"));
+	            endereco.setNumero(rs.getString("endereco.numero"));
+	            endereco.setComplemento(rs.getString("endereco.complemento"));
+	            endereco.setBairro(rs.getString("endereco.bairro"));
+	            endereco.setCep(rs.getString("endereco.cep"));
+	            cidade.setNome(rs.getString("endereco.cidade"));
+	            estado.setNome(rs.getString("endereco.estado"));
+	            cidade.setEstado(estado);
+	            endereco.setCidade(cidade);
+	            endereco.setTipoEndereco(rs.getString("endereco.tipo_endereco"));
+	            
+	            enderecos.add(endereco);
+            //}else {
+            	//Endereco endereco = new Endereco();
+            	//enderecos.add(endereco);
+            	
+            //}
+            	
+            /*
             while (rs.next()) {
+            	System.out.println("*************");
+                
             	System.out.println("dentro de while");
             	
             	Cidade cidade = new Cidade();
             	Estado estado = new Estado();
-                
+            	Endereco endereco = new Endereco();
+                        
             	
             	endereco.setId(rs.getInt("endereco.id_endereco"));
                 endereco.setRua(rs.getString("endereco.rua"));
-                endereco.setRua(rs.getString("endereco.numero"));
+                endereco.setNumero(rs.getString("endereco.numero"));
                 endereco.setComplemento(rs.getString("endereco.complemento"));
                 endereco.setBairro(rs.getString("endereco.bairro"));
                 endereco.setCep(rs.getString("endereco.cep"));
@@ -137,17 +172,24 @@ public class EnderecoDAO implements IDAO {
                 estado.setNome(rs.getString("endereco.estado"));
                 cidade.setEstado(estado);
                 endereco.setCidade(cidade);
-                endereco.setTipoEndereco(rs.getString("enderec.tipo_endereco"));
+                endereco.setTipoEndereco(rs.getString("endereco.tipo_endereco"));
+            	//Endereco endereco = null;
+                //enderecos.add(endereco);
                 
             	System.out.println("dados lidos");
             }
+            	*/
         } catch (SQLException ex) {
             System.out.println("falha de leitura");
         } finally {
             ConnectionFactory.closeConnection(con, stmt, rs);
         }
         //retornando dados lidos
-        return endereco;
+        System.out.println("===========-----------============");
+        
+        System.out.println("size de enderecos na DAO: "+enderecos.size());
+        
+        return enderecos;
 	}
 
 	@Override
@@ -159,7 +201,31 @@ public class EnderecoDAO implements IDAO {
 	@Override
 	public void excluir(EntidadeDominio entidade) {
 		// TODO Auto-generated method stub
-
+		Connection con=null;
+		try {
+			con = ConnectionFactory.getConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        PreparedStatement stmt=null;
+        ResultSet rs = null;
+        Endereco e = (Endereco) entidade;
+        String filtro = Integer.toString(e.getId());
+        //comando SQL a ser feito
+        String sql = "DELETE FROM endereco WHERE id_endereco = "+ filtro;
+        System.out.println("sql: "+sql);
+            try {
+				stmt = con.prepareStatement(sql);
+				//stmt.setInt(1, p.getId());
+	            stmt.executeUpdate();
+	            System.out.println("excluido com sucesso");
+	        
+			} catch (SQLException ex) {
+				// TODO Auto-generated catch block
+				ex.printStackTrace();
+			}
+        
 	}
 
 }

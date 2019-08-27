@@ -84,10 +84,10 @@
                     <ul class="nav nav-list bs-docs-sidenav nav-collapse collapse">
                         
                         <li class="active">
-                            <a href="menu_dados_cliente.html"><i class="icon-chevron-right"></i> Cliente</a>
+                            <a href="menu-cliente.jsp"><i class="icon-chevron-right"></i> Cliente</a>
                         </li>
                         <li class="active">
-                            <a href="menu_dados_produto.html"><i class="icon-chevron-right"></i> Produto</a>
+                            <a href="menu-produto.jsp"><i class="icon-chevron-right"></i> Produto</a>
                         </li>
                         <li class="active">
                             <a href="menu_pedidos.html"><i class="icon-chevron-right"></i> Pedidos</a>
@@ -115,8 +115,8 @@
 									  padding: 0;
 									  overflow: hidden;
 									  ">
-                                    <li style="display: inline" border-right: 1px solid #bbb;><a href="menu_cliente.jsp">Consultar</a></li>
-                                    <li style="display: inline" border-right: 1px solid #bbb;><a href="alterar_cliente.jsp">Alterar</a></li>
+                                    <li style="display: inline" border-right: 1px solid #bbb;><a href="menu-cliente.jsp">Consultar</a></li>
+                                    
                                 </ul>
                             </div>
                             
@@ -142,14 +142,9 @@
                                          
                         <div class="row-fluid">
                         <!-- block -->
-                        <div class="block" style="text-align: right">
-                            <div class="navbar navbar-inner block-header">
-                                
-                            </div>
-                            <div class="block-content collapse in">
                                 <div class="span12">
                                     
-  									<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="example">
+  									<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="myTable">
 										<thead>
 											<tr>
 												<th>Codigo</th>
@@ -161,14 +156,16 @@
 										</thead>
 										<c:forEach var="itemClientes" items="${listaClientes}">
 											<c:if test="${not empty itemClientes}">
-											<tr class="odd gradeX" onclick="myFunctionName(this)">
+											<tr class="odd gradeX"  onclick="myFunctionName(this)">
 											
-                                                <td><a style="text-decoration: underline">${itemClientes[0]}</a></td>
+                                                <td><a style="text-decoration: underline"><span id="id_codigo">${itemClientes[0]}</span></a></td>
                                                 <td>${itemClientes[1]}</td>
                                                 <td>${itemClientes[2]}</td>
 												<td>${itemClientes[3]}</td>
 												<input type="hidden" id="myInputCliente" name="txt_NmCodigo" value="">
-												<td><button type  ="submit" class="btn btn-warning btn-mini" name="operacao" formaction="PreAlterarCliente" id="bttAlterar" 
+												<input type="hidden" name="view" value="adm">
+												<td><button type  ="submit" class="btn btn-warning btn-mini" name="operacao" formaction="PreAlterarCliente" id="bttAlterar"
+												 
                                     			value="PREALTERAR">Visualizar</button>
                                                     
                                                 </td>
@@ -178,147 +175,11 @@
                             		</c:forEach>
 									</table>
                                 </div>
-                            </div>
-                        </div>
                         <!-- /block -->
                     </div>
                                          </fieldset>
                                          
-                                         
-                                      <fieldset>
-                                        <legend>Dados Pessoais</legend>
-                                        <div style ="width:100%; display=table";>
-                                            <div style="table-row">
-                                                <div style="width: 300px; display: table-cell;">
-                                                    <div class="control-group">
-                                                        Codigo
-                                                        <span class="input-xlarge uneditable-input">XXXXXXX</span>
-                                                    </div>
-                                                </div>
-                                                <div style="width: 300px; display: table-cell;">
-                                                    <div class="control-group">
-                                                        Nome
-                                                        <span class="input-xlarge uneditable-input">Joao da Silva</span>
-                                                    </div>
-                                                </div>
-                                                <div style="width: 300px; display: table-cell;">
-                                                    <div class="control-group">
-                                                        Sexo
-                                                        <span class="input-xlarge uneditable-input">Masculino</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div style="table-row">
-                                                <div style="width: 300px; display: table-cell;">
-                                                    <div class="control-group">
-                                                        Data de Nascimento
-                                                        <span class="input-xlarge uneditable-input">01/01/2000</span>
-                                                    </div>
-                                                </div>
-                                                <div style="width: 300px; display: table-cell;">
-                                                    <div class="control-group">
-                                                        RG
-                                                        <span class="input-xlarge uneditable-input">11.111.111-1</span>
-                                                    </div>
-                                                </div>
-                                                <div style="width: 300px; display: table-cell;">
-                                                    <div class="control-group">
-                                                        CPF
-                                                        <span class="input-xlarge uneditable-input">111.111.111-11</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div style="table-row">
-                                                <div style="width: 300px; display: table-cell;">
-                                                    <div class="control-group">
-                                                        Telefone
-                                                        <span class="input-xlarge uneditable-input">(11)91111-11111</span>
-                                                    </div>
-                                                </div>
-                                                <div style="width: 300px; display: table-cell;">
-                                                    <div class="control-group">
-                                                        Email
-                                                        <span class="input-xlarge uneditable-input">joao.silva@gmail.com</span>
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
-                                          </div>
-                                    </fieldset>
-                                    <fieldset>
-                                        <legend>Endereço</legend>
-                                        <div style ="width:100%; display=table";>
-                                            <div style="table-row">
-                                                <div style="width: 300px; display: table-cell;">
-                                                    <div class="control-group">
-                                                        Endereco
-                                                        <span class="input-xlarge uneditable-input">Avenida José da Silva</span>
-                                                    </div>
-                                                </div>
-                                                <div style="width: 300px; display: table-cell;">
-                                                    <div class="control-group">
-                                                        Numero
-                                                        <span class="input-xlarge uneditable-input">1000</span>
-                                                    </div>
-                                                </div>
-                                                <div style="width: 300px; display: table-cell;">
-                                                    <div class="control-group">
-                                                        Complemento
-                                                        <span class="input-xlarge uneditable-input">apto 52</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div style="table-row">
-                                                <div style="width: 300px; display: table-cell;">
-                                                    <div class="control-group">
-                                                        Bairro
-                                                        <span class="input-xlarge uneditable-input">Bela Vista</span>
-                                                    </div>
-                                                </div>
-                                                <div style="width: 300px; display: table-cell;">
-                                                    <div class="control-group">
-                                                        Cidade
-                                                        <span class="input-xlarge uneditable-input">São Paulo</span>
-                                                    </div>
-                                                </div>
-                                                <div style="width: 300px; display: table-cell;">
-                                                    <div class="control-group">
-                                                        Estado
-                                                        <span class="input-xlarge uneditable-input">SP</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div style="table-row">
-                                                <div style="width: 300px; display: table-cell;">
-                                                    <div class="control-group">
-                                                        CEP
-                                                        <span class="input-xlarge uneditable-input">XXXXX-XXX</span>
-                                                    </div>
-                                                </div>
-                                                <div style="width: 300px; display: table-cell;">
-                                                    <div class="control-group">
-                                                        Tipo de Endereco
-                                                        <span class="input-xlarge uneditable-input">Entrega</span>
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
-                                          </div>
-                                      </fieldset>
-                                      <fieldset>
-                                        <legend>Status</legend>
-                                          <div class="control-group">
-                                            <select class="span6 m-wrap" name="status">
-                                                <option value="">Selecionar Status</option>
-                                                <option value="Category 1">ATIVO</option>
-                                                <option value="Category 2">INATIVO</option>
-                                            </select>
-                                          <button type="submit" class="btn btn-primary">Atualizar</button>
-                                          </div>
-                                      </fieldset>
-                                         
-                                      
-                                         
+                                                                   
                                     </form>
 
                                 </div>
@@ -402,8 +263,16 @@
             var r = x.rowIndex;
             var codCliente = myTable.rows[r].cells[0].innerText;
             document.getElementById("myInputCliente").value = codCliente;
+            
         }
     </script>
+    <script>
+        var mensagem = '${msg}';
+        if (mensagem.length !== 0) {
+            alert(mensagem);
+        }
+    </script>
+    
     </body>
 
 </html>

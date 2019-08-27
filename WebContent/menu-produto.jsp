@@ -84,10 +84,10 @@
                     <ul class="nav nav-list bs-docs-sidenav nav-collapse collapse">
                         
                         <li class="active">
-                            <a href="menu_dados_cliente.html"><i class="icon-chevron-right"></i> Cliente</a>
+                            <a href="menu-cliente.jsp"><i class="icon-chevron-right"></i> Cliente</a>
                         </li>
                         <li class="active">
-                            <a href="menu_produto.jsp"><i class="icon-chevron-right"></i> Produto</a>
+                            <a href="menu-produto.jsp"><i class="icon-chevron-right"></i> Produto</a>
                         </li>
                         <li class="active">
                             <a href="menu_pedidos.html"><i class="icon-chevron-right"></i> Pedidos</a>
@@ -115,16 +115,16 @@
 									  padding: 0;
 									  overflow: hidden;
 									  ">
-                                    <li style="display: inline" border-right: 1px solid #bbb;><a href="cadastro_produto.jsp">Cadastrar</a></li>
-                                    <li style="display: inline" border-right: 1px solid #bbb;><a href="menu_produto.jsp">Consultar</a></li>
-                                    <li style="display: inline" border-right: 1px solid #bbb;><a href="alterar_produto.jsp">Alterar</a></li>
+                                    <li style="display: inline" border-right: 1px solid #bbb;><a href="cadastro-produto.jsp">Cadastrar</a></li>
+                                    <li style="display: inline" border-right: 1px solid #bbb;><a href="menu-produto.jsp">Consultar</a></li>
+                                    
                                 </ul>
                             </div>
                             
                             <form name="PesquisarProdutos" method="post">
 		                        <div class="input-group h2" width="400px" style="text-align: right">
 		                            <input type="text" class="form-control" name="txt_filtro" id="txt_filtro" 
-		                                   placeholder="código do Produto ou a Descricao" value="">
+		                                   placeholder="" value="">
 		                            <span class="input-group-btn">
 		                                <button type="submit" class="btn btn-primary" 
 		                                        formaction="PesquisarProduto" name="operacao" value="PESQUISAR">
@@ -173,7 +173,8 @@
                                                 <input type="hidden" id="myInputProduto" name="txt_NmCodigo" value="">
                                                 <td><button type  ="submit" class="btn btn-warning btn-mini" name="operacao" formaction="PreAlterarProduto" id="bttAlterar" 
                                     			value="PREALTERAR">Editar</button>
-                                                    <button class="btn btn-inverse btn-mini">Estoque</button>
+                                                    <button class="btn btn-inverse btn-mini" name="operacao" formaction="PreAlterarEstoque" id="bttAlterar" 
+                                    			value="PREALTERAR">Estoque</button>
                                                 </td>
 											</tr>
 											
@@ -271,11 +272,18 @@
         function myFunctionName(x) {
             var myTable = document.getElementById('myTable');
             var r = x.rowIndex;
-            var codProduto = myTable.rows[r].cells[0].innerText;
+            var codProduto = myTable.rows[r].cells[1].innerText;
             document.getElementById("myInputProduto").value = codProduto;
         }
     </script>
         
+    <script>
+        var mensagem = '${msg}';
+        if (mensagem.length !== 0) {
+            alert(mensagem);
+        }
+    </script>
+    
     </body>
 
 </html>

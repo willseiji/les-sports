@@ -1,5 +1,9 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page isELIgnored ="false" %>
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" session="false"%>
+    
 <!DOCTYPE html>
 <html>
   <head>
@@ -29,15 +33,18 @@
 	<div class="header">
         <div class="header_top">
 			<div class="logo">
-				<a href="site_principal.html"><img src="images2/logo.png" alt="" /></a>
+				<a href="home.jsp"><img src="images2/logo.png" alt="" /></a>
 			</div>
             <div class="headertop_desc">
+            
+            
 			<div class="account_desc">
 				<ul>
                     <li><a href="site_menu_carrinho.html" style="font-size: 15px">Carrinho</a></li>
 					<li><a href="site_meus_pedidos.html" style="font-size: 15px">Meus Pedidos</a></li>
                     <li><a href="site_meus_cupons.html" style="font-size: 15px">Meus Cupons</a></li>
-					<li><a href="login.html" style="font-size: 15px">Minha Conta</a></li>
+                    <li><a href="PreAlterarCliente?txt_NmCodigo=PED00007&operacao=PREALTERAR&view=cliente" style="font-size: 15px">Minha Conta</a></li>
+					<li><a href="login.html" style="font-size: 15px">Login</a></li>
 				</ul>
 			</div>
 			<div class="clear"></div>
@@ -49,7 +56,7 @@
 	<div class="header_bottom2">
 	     	<div class="menu">
 	     		<ul>
-			    	<li class="active"><a href="site_principal.html">Home</a></li>
+			    	<li class="active"><a href="home.jsp">Home</a></li>
 			    	<li><a href="about.html">Calçados</a>
                         <ul class="dropdown">
                             <li><a href="#">Botas</a></li>
@@ -102,7 +109,7 @@
       
     <div class="container">
 
-      <form class="form-signin"  action="UsuarioLogin" method="post" >
+      <form class="form-signin"  name="loginForm" method="post" >
         <h2 class="form-signin-heading">Login</h2>
         Nome: <input type="text" class="input-block-level" name="txt_nome">
         Senha: <input type="password" class="input-block-level" name="txt_senha">
@@ -110,12 +117,14 @@
           <input type="checkbox" value="remember-me"> Lembrar-me
         </label>
         <button class="btn btn-large btn-primary" type="submit">Voltar</button>
-        <button class="btn btn-large btn-primary" type="submit" value="LOGIN">Logar</button>
-        <a href="form_cadastro_cliente.html">cadastre-se</a>
+        <button class="btn btn-large btn-primary" type="submit" formaction="UsuarioLogin" >Logar</button>
+        <button class="btn btn-large btn-primary" type="submit" formaction="UsuarioLogout" >Logout</button>
+        <a href="cadastro-cliente.jsp">cadastre-se</a>
       </form>
     
-
-    </div> <!-- /container -->
+        </div> <!-- /container -->
+        
+        
     <script src="vendors/jquery-1.9.1.min.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
   </body>

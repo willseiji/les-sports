@@ -143,7 +143,9 @@ public class ClienteViewHelper implements IViewHelper {
 		}else if (operacao.equals("PREALTERAR")) {
 			//recebendo valor de pesquisa
 			System.out.println("inicio de prealterar");
+			
 			String codCliente = request.getParameter("txt_NmCodigo");
+			System.out.println("codigo em pre_alterar: "+codCliente);
 			
 			cliente.setCodigo(codCliente);
 			//caso botão apertado foi o de 'value = SALVAR'
@@ -199,7 +201,7 @@ public class ClienteViewHelper implements IViewHelper {
 		if (operacao.equals("SALVAR")) {
 
 			try {
-				request.getRequestDispatcher("menu-cliente.jsp").forward(request, response);
+				request.getRequestDispatcher("home.jsp").forward(request, response);
 			} catch (ServletException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -262,7 +264,11 @@ public class ClienteViewHelper implements IViewHelper {
 
 		} else if (operacao.equals("PREALTERAR")) {
 			System.out.println("Prealterar");
+			String view = request.getParameter("view");
 
+			System.out.println("====================");
+			System.out.println("view: "+view);
+			
 			List<String> itensCliente = null;
 			List<String> itensEndereco = null;
 			List<List<String>> listaEnderecos = new java.util.ArrayList<List<String>>();
@@ -309,13 +315,28 @@ public class ClienteViewHelper implements IViewHelper {
 				itensCliente.add(cliente.getEmail());
 				itensCliente.add(cliente.getTelefone());
 				itensCliente.add(cliente.getStatus());
+				System.out.println("------------------------");
+				System.out.println("size: "+cliente.getEnderecos().size());
 				
 				for (int i = 0; i < cliente.getEnderecos().size(); i++) {
 					
 					Endereco endereco = cliente.getEnderecos().get(i);
+					
+					System.out.println("------------------------");
+					System.out.println("id_endereco: "+endereco.getId());
+	            	System.out.println("rua: "+endereco.getRua());
+	            	System.out.println("numero: "+endereco.getRua());
+	            	System.out.println("complemento: "+endereco.getComplemento());
+	            	System.out.println("bairro: "+endereco.getBairro());
+	            	System.out.println("cep: "+endereco.getCep());
+	            	System.out.println("cidade: "+endereco.getCidade().getNome());
+	            	System.out.println("estado: "+endereco.getCidade().getEstado().getNome());
+	            	System.out.println("tipo endereco: "+endereco.getTipoEndereco());
+	            	
+					
                 	itensEndereco = new java.util.ArrayList<String>();
                 	itensEndereco.add(Integer.toString(endereco.getId()));
-	                itensEndereco.add(endereco.getRua());
+                	itensEndereco.add(endereco.getRua());
 	                itensEndereco.add(endereco.getNumero());
 	                itensEndereco.add(endereco.getComplemento());
 	                itensEndereco.add(endereco.getBairro());
@@ -329,12 +350,20 @@ public class ClienteViewHelper implements IViewHelper {
                 
 				
 				request.setAttribute("itensCliente", itensCliente);
-				//request.setAttribute("listaEnderecos", listaEnderecos);
+				request.setAttribute("listaEnderecos", listaEnderecos);
 				response.setContentType("text/html;charset=UTF-8");
-				try {
-					request.getRequestDispatcher("alterar-cliente.jsp").forward(request, response);
-				} catch (ServletException ex) {
-					Logger.getLogger(ProdutoViewHelper.class.getName()).log(Level.SEVERE, null, ex);
+				if(view.equals("cliente")) {
+					try {
+						request.getRequestDispatcher("minha-conta.jsp").forward(request, response);
+					} catch (ServletException ex) {
+						Logger.getLogger(ProdutoViewHelper.class.getName()).log(Level.SEVERE, null, ex);
+					}
+				}else {
+					try {
+						request.getRequestDispatcher("alterar-cliente.jsp").forward(request, response);
+					} catch (ServletException ex) {
+						Logger.getLogger(ProdutoViewHelper.class.getName()).log(Level.SEVERE, null, ex);
+					}
 				}
 
 			}

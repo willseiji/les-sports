@@ -3,8 +3,8 @@ package br.com.les.dominio.impl;
 public class Usuario extends EntidadeDominio{
 	private String nome;
 	private String senha;
-	
 	private int id_cliente;
+	private String codCliente;
 	
 	public String getNome() {
 		return nome;
@@ -23,6 +23,12 @@ public class Usuario extends EntidadeDominio{
 	}
 	public void setId_cliente(int id_cliente) {
 		this.id_cliente = id_cliente;
+	}
+	public String getCodCliente() {
+		return codCliente;
+	}
+	public void setCodCliente(String codCliente) {
+		this.codCliente = codCliente;
 	}
 	
 	

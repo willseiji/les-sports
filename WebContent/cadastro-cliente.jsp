@@ -259,8 +259,8 @@
   								                  <div class="controls">
   									                 <select name ="txt_TipoEndereco" id="id_TipoEndereco">
                                                         <option value=""></option>
-                                                        <option value="end_entrega">Entrega</option>
-                                                        <option value="end_cobranca">Cobrança</option>
+                                                        <option value="entrega">Entrega</option>
+                                                        <option value="cobranca">Cobrança</option>
                                                     </select>
   								                  </div>
   							                   </div>

@@ -19,7 +19,7 @@ public class Produto extends EntidadeDominio {
 	
 	private TabelaPrecificacao tabelaPrec = new TabelaPrecificacao();
 	private Imagem imagem = new Imagem();
-	private List<ItemMovEstoque> itensEstoque = new ArrayList<ItemMovEstoque>();
+	private List<Estoque> itensEstoque = new ArrayList<Estoque>();
 	
 	
 	
@@ -110,10 +110,10 @@ public class Produto extends EntidadeDominio {
 	public void setImagem(Imagem imagem) {
 		this.imagem = imagem;
 	}
-	public List<ItemMovEstoque> getItensEstoque() {
+	public List<Estoque> getItensEstoque() {
 		return itensEstoque;
 	}
-	public void setItensEstoque(List<ItemMovEstoque> itensEstoque) {
+	public void setItensEstoque(List<Estoque> itensEstoque) {
 		this.itensEstoque = itensEstoque;
 	}
 	

@@ -65,7 +65,63 @@
     <servlet-name>AlterarCliente</servlet-name>
     <url-pattern>/AlterarCliente</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>PreAlterarEstoque</servlet-name>
+    <servlet-class>br.com.les.servlet.Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PreAlterarEstoque</servlet-name>
+    <url-pattern>/PreAlterarEstoque</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>AlterarEstoque</servlet-name>
+    <servlet-class>br.com.les.servlet.Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AlterarEstoque</servlet-name>
+    <url-pattern>/AlterarEstoque</url-pattern>
+  </servlet-mapping>
   
+  <servlet>
+    <servlet-name>CadastrarEndereco</servlet-name>
+    <servlet-class>br.com.les.servlet.Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CadastrarEndereco</servlet-name>
+    <url-pattern>/CadastrarEndereco</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>PesquisarEndereco</servlet-name>
+    <servlet-class>br.com.les.servlet.Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PesquisarEndereco</servlet-name>
+    <url-pattern>/PesquisarEndereco</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>PreAlterarEndereco</servlet-name>
+    <servlet-class>br.com.les.servlet.Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PreAlterarEndereco</servlet-name>
+    <url-pattern>/PreAlterarEndereco</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>AlterarEndereco</servlet-name>
+    <servlet-class>br.com.les.servlet.Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AlterarEndereco</servlet-name>
+    <url-pattern>/AlterarEndereco</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ExcluirEndereco</servlet-name>
+    <servlet-class>br.com.les.servlet.Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ExcluirEndereco</servlet-name>
+    <url-pattern>/ExcluirEndereco</url-pattern>
+  </servlet-mapping>
   
   
   <servlet>
@@ -76,9 +132,14 @@
     <servlet-name>UsuarioLogin</servlet-name>
     <url-pattern>/UsuarioLogin</url-pattern>
   </servlet-mapping>
-  
-  
-  
+  <servlet>
+    <servlet-name>UsuarioLogout</servlet-name>
+    <servlet-class>br.com.les.servlet.ServletLogout</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UsuarioLogout</servlet-name>
+    <url-pattern>/UsuarioLogout</url-pattern>
+  </servlet-mapping>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.htm</welcome-file>

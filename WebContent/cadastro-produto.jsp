@@ -137,10 +137,10 @@
                     <ul class="nav nav-list bs-docs-sidenav nav-collapse collapse">
                         
                         <li class="active">
-                            <a href="menu_dados_cliente.html"><i class="icon-chevron-right"></i> Cliente</a>
+                            <a href="menu-cliente.jsp"><i class="icon-chevron-right"></i> Cliente</a>
                         </li>
                         <li class="active">
-                            <a href="menu_produto.jsp"><i class="icon-chevron-right"></i> Produto</a>
+                            <a href="menu-produto.jsp"><i class="icon-chevron-right"></i> Produto</a>
                         </li>
                         <li class="active">
                             <a href="menu_pedidos.html"><i class="icon-chevron-right"></i> Pedidos</a>
@@ -168,8 +168,8 @@
   padding: 0;
   overflow: hidden;
   ">
-                                    <li style="display: inline" border-right: 1px solid #bbb;><a href="cadastro_produto.jsp">Cadastrar</a></li>
-                                    <li style="display: inline" border-right: 1px solid #bbb;><a href="menu_produto.jsp">Consultar</a></li>
+                                    <li style="display: inline" border-right: 1px solid #bbb;><a href="cadastro-produto.jsp">Cadastrar</a></li>
+                                    <li style="display: inline" border-right: 1px solid #bbb;><a href="menu-produto.jsp">Consultar</a></li>
                                 </ul>
                          
                             </div>
@@ -316,6 +316,14 @@
             });
         });
         </script>
+        
+        <script>
+        var mensagem = '${msg}';
+        if (mensagem.length !== 0) {
+            alert(mensagem);
+        }
+    </script>
+    
     </body>
 
 </html>

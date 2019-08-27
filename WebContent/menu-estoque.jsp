@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page isELIgnored ="false" %>
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -12,6 +13,11 @@
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
         <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
         <link href="assets/styles.css" rel="stylesheet" media="screen">
+        <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="vendors/flot/excanvas.min.js"></script><![endif]-->
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
         <script src="vendors/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     </head>
     
@@ -84,10 +90,10 @@
                     <ul class="nav nav-list bs-docs-sidenav nav-collapse collapse">
                         
                         <li class="active">
-                            <a href="menu_dados_cliente.html"><i class="icon-chevron-right"></i> Cliente</a>
+                            <a href="menu-cliente.jsp"><i class="icon-chevron-right"></i> Cliente</a>
                         </li>
                         <li class="active">
-                            <a href="menu_produto.jsp"><i class="icon-chevron-right"></i> Produto</a>
+                            <a href="menu-produto.jsp"><i class="icon-chevron-right"></i> Produto</a>
                         </li>
                         <li class="active">
                             <a href="menu_pedidos.html"><i class="icon-chevron-right"></i> Pedidos</a>
@@ -110,133 +116,181 @@
                         <!-- block -->
                         <div class="block">
                             <div class="navbar navbar-inner block-header">
-                                <ul style="list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  ">
-                                    <li style="display: inline" border-right: 1px solid #bbb;><a href="cadastro_produto.jsp">Cadastrar</a></li>
-                                    <li style="display: inline" border-right: 1px solid #bbb;><a href="dados_produto.jsp">Consultar</a></li>
-                                </ul>
+                                <div class="muted pull-left">Estoque</div>
                             </div>
-                            
-                            
                             <div class="block-content collapse in">
                                 <div class="span12">
-                                     <form class="form-horizontal" name="alterarForm" method="post" >
-										                                                                               
+                                     <form class="form-horizontal">
+                                                                                  
                                          <fieldset>
-                                        <legend>Dados do Produto</legend>
-                                       <div style ="width:100%; display=table">
+                                        <legend>Informações do Estoque</legend>
+                                        <div style ="width:100%; display=table";>
                                             <div style="table-row">
-            	
-                                                <div style="width: 200px; margin-right: 20px; display: table-cell;">
-                                                	<div class="control-group">
-                                                        Código
-                                                        <span class="input-xlarge uneditable-input">${itensProduto[0]}</span>
-                                                        <input type="hidden" class="form-control" name="txt_Codigo" value='${itensProduto[0]}'>
-                                                	</div>
-                                                </div>
-                                                <div style="width: 200px; margin-right: 20px; display: table-cell;">
-                                                	<div class="control-group">
-                                                     	Nome
-                                                     	<input type="text" class="input-xlarge focused"  name ="txt_NmProduto" id="id_NmProduto" value='${itensProduto[1]}'>
-                                                	</div>
-                                                </div>
-                                                <div style="width: 200px; display: table-cell;">
+                                                <div style="width:120px; display: table-cell;">
                                                     <div class="control-group">
-                                                        Categoria
-                                                        <input type="text" class="input-xlarge focused" name ="txt_Categoria" id="id_Categoria" value='${itensProduto[2]}'>
+                                                        <p>Código</p>
+                                                        <span class="input-xlarge uneditable-input" style="width: 100px">XXX0001</span>
                                                     </div>
                                                 </div>
-                                                
-                                            </div>
-                                            <div style="table-row">
-                                            <div style="width: 200px; margin-right: 20px; display: table-cell;">
+                                                <div style="width:220px; display: table-cell;">
                                                     <div class="control-group">
-                                                        Material
-                                                        <input type="text" class="input-xlarge focused" name ="txt_Material" id="id_Material" value='${itensProduto[3]}'>
+                                                        <p>Nome</p>
+                                                        <span class="input-xlarge uneditable-input" style="width: 200px">Uniforme Barcelona Classic</span>
                                                     </div>
                                                 </div>
-                                                <div style="width: 200px; margin-right: 20px; display: table-cell;">
+                                                <div style="width:120px; display: table-cell;">
                                                     <div class="control-group">
-                                                        Tamanho
-                                                        <input type="text" class="input-xlarge focused" name ="txt_Tamanho" id="id_Tamanho" value='${itensProduto[4]}'>
+                                                        <p>Categoria</p>
+                                                        <span class="input-xlarge uneditable-input" style="width: 100px">Roupa</span>
                                                     </div>
                                                 </div>
-                                                <div style="width: 200px; display: table-cell;">
+                                                <div style="width:120px; display: table-cell;">
                                                     <div class="control-group">
-                                                        Peso (g)
-                                                        <input type="text" class="input-xlarge focused" name ="txt_Peso" id="id_Peso" value='${itensProduto[5]}'>
+                                                        <p>Fabricante</p>
+                                                        <span class="input-xlarge uneditable-input" style="width: 100px">Nike</span>
                                                     </div>
                                                 </div>
-                                                
-                                                
-                                            </div>
-                                            <div style="table-row">
-                                            	<div style="width: 200px; margin-right: 20px; display: table-cell;">
-                                                    <div class="control-group">
-                                                        Fabricante
-                                                        <input type="text" class="input-xlarge focused" name ="txt_Fabricante" id="id_Fabricante" value='${itensProduto[6]}'>
-                                                    </div>
-                                                </div>
-                                                <div style="width: 200px; margin-right: 20px; display: table-cell;">
-                                                    <div class="control-group">
-                                                        Preço
-                                                        <span class="input-xlarge uneditable-input">${itensProduto[7]}</span>
-                                                    </div>
-                                                </div>
-                                                <div style="width: 200px; display: table-cell;">
-                                                    <div class="control-group">
-                                                        Quantidade
-                                                        <span class="input-xlarge uneditable-input">${itensProduto[8]}</span>
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
-                                            <div style="table-row">
-                                                <div style="display: table-cell;">
-                                                    <div class="control-group">
-                                                    <p>Descrição</p>
-                                                        
-                                                        <textarea placeholder=" " style="width: 710px; height: 200px" name ="txt_Descricao" id="id_Descricao" >${itensProduto[9]}
-                                                            </textarea>
+                                                <div style="width:170px; display: table-cell;">
                                                     
+                                                    <div class="control-group">
+                                                        <p>Preço</p>
+                                                        <span class="input-xlarge uneditable-input" style="width: 150px">R$ 150,00</span>
                                                     </div>
-                                              
                                                 </div>
-                                                
+
                                             </div>
+                                            <div style="table-row">
+                                                <div style="width: 170px; display: table-cell;">
+                                                    <div class="control-group">
+                                                        <p>Estoque Mínimo</p>
+                                                        <span class="input-xlarge uneditable-input" style="width: 150px">1</span>
+                                                    </div>
+                                                </div>
+                                                <div style="width: 170px; display: table-cell;">
+                                                    <div class="control-group">
+                                                        <p>Estoque Máximo</p>
+                                                        <span class="input-xlarge uneditable-input" style="width: 150px">30</span>
+                                                    </div>
+                                                </div>
+                                                <div style="width: 170px; display: table-cell;">
+                                                    <div class="control-group">
+                                                        <p>Estoque Atual</p>
+                                                        <span class="input-xlarge uneditable-input" style="width: 150px">10</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            
                                           </div>
                                     </fieldset>
-                                      <fieldset>
-                                        <legend>Status</legend>
-                                          <div class="control-group">
-                                              <label class="control-label">Status</label>
-                                              <div class="controls">
-                                                  <span class="input-xlarge uneditable-input">${itensProduto[10]}</span>
-                                              </div>
-                                          </div>
-                                          <div class="control-group">
-                                                <label class="control-label" for="optionsCheckbox">Inativar Produto</label>
-                                                <div class="controls">
-                                                <label class="uniform">
-                                                  <input class="uniform_on" type="checkbox" value="INATIVO" name ="txt_Status" id="id_Status">
-                                                    
-                                                </label>
-                                            </div>
-                                          </div>
-                                          <div class="control-group">
-                                            <label class="control-label" for="textarea2">Motivo para inativação</label>
-                                            <div class="controls">
-                                                <textarea placeholder=" " style="width: 300px; height: 50px"></textarea>
-                                            </div>
-                                            </div>
-                                            <button type="submit" class="btn btn-primary"  name="operacao" formaction="AlterarProduto" value="ALTERAR">Atualizar</button>
-                                          
-                                      </fieldset>
+                                         <br>
+                                        <fieldset>
+                                            <legend>Nova Movimentação</legend>
+                                                <div class="control-group">
+                                                  <label class="control-label" for="focusedInput">Volume</label>
+                                                  <div class="controls">
+                                                    <input class="input-xlarge focused" id="focusedInput" type="text" value="">
+                                                  </div>
+                                                </div>
+                                                <div class="control-group">
+                                                  <label class="control-label" for="focusedInput">Preço de Compra</label>
+                                                  <div class="controls">
+                                                    <input class="input-xlarge focused" id="focusedInput" type="text" value="">
+                                                  </div>
+                                                </div>
+                                                <div class="control-group">
+                                                  <label class="control-label" for="focusedInput">Preço de Venda (R$)</label>
+                                                  <div class="controls">
+                                                    <input class="input-xlarge uneditable-input" type="text" value="">
+                                                  </div>
+                                                </div>
+                                            </fieldset> 
                                          
-                                      
+                                    <br>
+                                              <fieldset>
+                                    <legend>Histórico de Movimentação</legend>
+                                    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="example">
+						
+										<thead>
+											<tr>
+                                                <th>Data do Registro</th>
+												<th>Preço de Compra</th>
+												<th>Preço de Venda</th>
+												<th>Volume</th>
+
+											</tr>
+										</thead>
+										<tbody>
+											<tr class="odd gradeX">
+                                                <td>11/08/2019</td>
+                                                <td>R$ 130,00</td>
+                                                <td>R$ 150,00</td>
+                                                <td>R$ 10</td>
+											</tr>
+                                            <tr class="odd gradeX">
+                                                <td>11/07/2019</td>
+                                                <td>R$ 130,00</td>
+                                                <td>R$ 150,00</td>
+                                                <td>R$ 10</td>
+											</tr>
+                                            <tr class="odd gradeX">
+                                                <td>11/06/2019</td>
+                                                <td>R$ 130,00</td>
+                                                <td>R$ 150,00</td>
+                                                <td>R$ 10</td>
+											</tr>
+											
+										</tbody>
+												</table>
+                                         </fieldset>
+                                    
+                                        <br> 
+                                         <fieldset>
+                                    <legend>Lista de Estoque</legend>
+                                         
+                                    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="example">
+										<thead>
+											<tr>
+												<th>Codigo</th>
+												<th>Descrição</th>
+												<th>Status</th>
+												
+											</tr>
+										</thead>
+										<tbody>
+											<tr class="odd gradeX">
+                                                <td><a style="text-decoration: underline">XXX00000</a></td>
+												<td>Bola de Futebol XXXX Penalty</td>
+												<td class="center">ATIVO</td>
+												
+											</tr>
+											<tr class="odd gradeX">
+                                                <td><a style="text-decoration: underline">XXX00001</a></td>
+												<td>Uniforme Barcelona Classic</td>
+												<td class="center">ATIVO</td>
+											</tr>
+                                            <tr class="odd gradeX">
+                                                <td><a style="text-decoration: underline">XXX00002</a></td>
+												<td>Meiao Branco XL</td>
+												<td class="center">ATIVO</td>
+											</tr>
+                                            <tr class="odd gradeX">
+                                                <td><a style="text-decoration: underline">XXX00003</a></td>
+												<td>Agasalho Corinthians</td>
+												<td class="center">ATIVO</td>
+											</tr>
+											
+										</tbody>
+									</table>
+                                    
+                                        
+                                    </fieldset>
+                                    
+                                         
+                                    
+                                         
+                                    <hr>                                         
+                                         
                                          
                                     </form>
 
@@ -279,7 +333,7 @@
 	<script src="assets/form-validation.js"></script>
         
 	<script src="assets/scripts.js"></script>
-        <script src="assets/DT_bootstrap.js"></script>
+        
         <script>
 
 	jQuery(document).ready(function() {   
@@ -314,13 +368,6 @@
             });
         });
         </script>
-        <script>
-        var mensagem = '${msg}';
-        if (mensagem.length !== 0) {
-            alert(mensagem);
-        }
-    </script>
-    
     </body>
 
 </html>

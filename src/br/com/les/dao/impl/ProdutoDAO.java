@@ -40,7 +40,6 @@ public class ProdutoDAO implements IDAO {
         		+ " VALUES(?,?,?,?,?,?,?,?,?)";
         //determinando valores a serem encontrados no banco de dados
         try {
-        	System.out.println("statement dentro do try2");
             //comando inserido no SGBD
         	stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         	stmt.setString(1, geradorCodigo(p.getNomeProd()));
@@ -89,26 +88,27 @@ public class ProdutoDAO implements IDAO {
         Produto p = (Produto) entidade;
         //comando SQL a ser feito
         String filtro = p.getDescricao();
-        System.out.println("filtro: "+filtro);
         
         try {
         	String sql = "SELECT * FROM produto";
         
             if(filtro!="") {
-            	sql =sql + "WHERE produto.codigo like ? OR produto.nome like ? OR produto.material like ? "
-            			+ "OR produto.fabricante ?"
+            	sql =sql + " WHERE produto.codigo like '%" + filtro 
+            			+"%' OR produto.nome like '%" + filtro
+            			+ "%' OR produto.material like '%" + filtro
+            			+ "%' OR produto.categoria like '%" + filtro
+            			+ "%' OR produto.fabricante like '%" + filtro +"%'"
             			;
             	//comando inserido no SGBD
             	stmt = con.prepareStatement(sql);
-            	stmt.setString(1, '%'+filtro+'%');
+            	/*stmt.setString(1, '%'+filtro+'%');
             	stmt.setString(2, '%'+filtro+'%');
             	stmt.setString(3, '%'+filtro+'%');
             	stmt.setString(4, '%'+filtro+'%');
-            	
+            	*/
             }
             else
             	stmt = con.prepareStatement(sql);
-            System.out.println("sql: "+sql);
             
             rs = stmt.executeQuery();
             //lendo vários dados
@@ -136,6 +136,7 @@ public class ProdutoDAO implements IDAO {
             ConnectionFactory.closeConnection(con, stmt, rs);
         }
         //retornando dados lidos
+        
         return produtos;
 
 	}
@@ -164,22 +165,15 @@ public class ProdutoDAO implements IDAO {
         
         String filtro = p.getCodigoProd();
         String sql = "SELECT * FROM produto WHERE produto.codigo like '%" + filtro+"%'";
-        System.out.println("filtro: "+filtro);
-        System.out.println("sql: "+sql);
         
         try {
-        	System.out.println("dentro de try");
             //comando inserido no SGBD
             stmt = con.prepareStatement(sql);
-            System.out.println("statement");
             //stmt.setString(1, filtro);
-            System.out.println("antes de execute");
             rs = stmt.executeQuery();
-            System.out.println("rs: ");
-            System.out.println("depois de execute");
+            System.out.println("rs: "+rs);
             //lendo vários dados
             while (rs.next()) {
-            	System.out.println("dentro de while");
             	produto.setCodigoProd(rs.getString("produto.codigo"));
                 produto.setNomeProd(rs.getString("produto.nome"));
                 produto.setMaterial(rs.getString("produto.material"));
@@ -199,9 +193,6 @@ public class ProdutoDAO implements IDAO {
         } finally {
             ConnectionFactory.closeConnection(con, stmt, rs);
         }
-        System.out.println("Nome: "+produto.getNomeProd());
-        System.out.println("Categoria: "+produto.getCategoria());
-        System.out.println("Material: "+produto.getMaterial());
         //retornando dados lidos
         return produtos;
 	}
@@ -219,7 +210,6 @@ public class ProdutoDAO implements IDAO {
 			}
 	        //criando statemment
 	        PreparedStatement stmt = null;
-	        System.out.println("codigo do produto em dao alterar: "+p.getCodigoProd());
 	        String codigo = p.getCodigoProd();
 	        
 	        //comando SQL a ser feito

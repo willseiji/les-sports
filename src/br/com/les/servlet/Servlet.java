@@ -88,6 +88,7 @@ public class Servlet extends HttpServlet {
                 
                 //obtém nome do identificar do recurso (URI)
                 String uri = request.getRequestURI();
+                
                 //cria instância de view helper de acordo com recurso de origem
                 IViewHelper vh = vhs.get(uri);
                 //obtém nome da operação de acordo com o 'value' do botão que foi apertado 

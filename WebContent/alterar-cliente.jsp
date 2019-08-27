@@ -1,3 +1,6 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page isELIgnored ="false" %>
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -173,6 +176,7 @@
 											</div>
 									</fieldset>
 									<fieldset>
+									<legend>Endereços do Cliente</legend>
 										<table cellpadding="0" cellspacing="0" border="0"
 											class="table table-striped table-bordered" id="example">
 											<thead>
@@ -187,24 +191,27 @@
 													<th>Tipo</th>
 												</tr>
 											</thead>
-											<c:forEach var="itemEnderecos" items="${listaEnderecos}">
-												<c:if test="${not empty itemClientes}">
-													<tr class="odd gradeX" onclick="myFunctionName(this)">
-														<td style="display:none;" >${itemEnderecos[0]}</td>  
-														<td>${itemEndereco[1]}</td>
-														<td>${itemEndereco[2]}</td>
-														<td>${itemEndereco[3]}</td>
-														<td>${itemEndereco[4]}</td>
-														<td>${itemEndereco[5]}</td>
-														<td>${itemEndereco[6]}</td>
-														<td>${itemEndereco[7]}</td>
-														<td>${itemEndereco[8]}</td>
-														
-													</tr>
-
-												</c:if>
-											</c:forEach>
-										</table>
+											<tbody>
+											<c:forEach var="itemEndereco" items="${listaEnderecos}">
+		                         				<c:if test="${not empty itemEndereco}">
+						                         <tr>
+						                         <td style="display:none;" name="txt_IdEndereco" id="id_Endereco">${itemEndereco[0]}</td>
+						                              <td >${itemEndereco[1]}</td>
+						                              <td >${itemEndereco[2]}</td>
+						                              <td >${itemEndereco[3]}</td>
+						                              <td >${itemEndereco[4]}</td>
+						                              <td >${itemEndereco[5]}</td>
+						                              <td >${itemEndereco[6]}</td>
+						                              <td >${itemEndereco[7]}</td>
+						                              <td >${itemEndereco[8]}</td>
+						                              
+						                         </tr>
+								               	</c:if>
+					    	                </c:forEach>
+					    	                </tbody>
+	   	            						</table>
+	   	            						
+	   	            						<button type="submit" class="btn btn-primary"  name="operacao" formaction="AlterarCliente" value="ALTERAR">Atualizar</button>
 									</fieldset>
 
 								</form>
@@ -250,40 +257,13 @@
 
 	<script src="assets/scripts.js"></script>
 	<script src="assets/DT_bootstrap.js"></script>
-	<script>
-
-	jQuery(document).ready(function() {   
-	   FormValidation.init();
-	});
-	
-
-        $(function() {
-            $(".datepicker").datepicker();
-            $(".uniform_on").uniform();
-            $(".chzn-select").chosen();
-            $('.textarea').wysihtml5();
-
-            $('#rootwizard').bootstrapWizard({onTabShow: function(tab, navigation, index) {
-                var $total = navigation.find('li').length;
-                var $current = index+1;
-                var $percent = ($current/$total) * 100;
-                $('#rootwizard').find('.bar').css({width:$percent+'%'});
-                // If it's the last tab then hide the last button and show the finish instead
-                if($current >= $total) {
-                    $('#rootwizard').find('.pager .next').hide();
-                    $('#rootwizard').find('.pager .finish').show();
-                    $('#rootwizard').find('.pager .finish').removeClass('disabled');
-                } else {
-                    $('#rootwizard').find('.pager .next').show();
-                    $('#rootwizard').find('.pager .finish').hide();
-                }
-            }});
-            $('#rootwizard .finish').click(function() {
-                alert('Finished!, Starting over!');
-                $('#rootwizard').find("a[href*='tab1']").trigger('click');
-            });
-        });
-        </script>
+	    <script>
+        var mensagem = '${msg}';
+        if (mensagem.length !== 0) {
+            alert(mensagem);
+        }
+    </script>
+    
 </body>
 
 </html>

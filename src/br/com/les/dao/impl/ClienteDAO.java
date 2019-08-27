@@ -82,13 +82,13 @@ public class ClienteDAO implements IDAO {
 	@Override
 	public List<EntidadeDominio> prealterar(EntidadeDominio entidade) {
 		System.out.println("dao prealterar");
-        Connection con=null;
+        /*Connection con=null;
 
 		try {
 			con = ConnectionFactory.getConnection();
-		} catch (SQLException e) {
+		} catch (SQLException ex) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ex.printStackTrace();
 		}
         //criando statemment
         PreparedStatement stmt = null;
@@ -96,25 +96,45 @@ public class ClienteDAO implements IDAO {
         ResultSet rs = null;
         //cast de Peca
         Cliente c = (Cliente) entidade;
-        Cliente cliente = new Cliente();
+        //Cliente cliente = new Cliente();
+        Produto produto = new Produto();
+        Endereco endereco = new Endereco();
         List<EntidadeDominio> clientes = new ArrayList<>();
-        
+        List<EntidadeDominio> produtos = new ArrayList<>();
+        List<Endereco> enderecos = new ArrayList<>();
+        */
         //comando SQL a ser feito
         
-        String filtro = c.getCodigo();
-        String sql = "SELECT * FROM cliente WHERE cliente.codigo like '%" + filtro+"%'";
-        System.out.println("filtro: "+filtro);
+        //String filtro = c.getCodigo();
+        /*
+        //String sql = "SELECT * FROM cliente WHERE cliente.codigo like '%" + filtro+"%'";
+        String sql = "SELECT * FROM cliente WHERE cliente.codigo like '%WIL00003%'";
+        //System.out.println("filtro: "+filtro);
         System.out.println("sql: "+sql);
         try {
         	System.out.println("dentro de try");
             //comando inserido no SGBD
             stmt = con.prepareStatement(sql);
-            System.out.println("statement");
+            System.out.println("statement: "+stmt);
             //stmt.setString(1, filtro);
             System.out.println("antes de execute");
             rs = stmt.executeQuery();
-            System.out.println("rs: ");
+            System.out.println("rs: "+rs);
             System.out.println("depois de execute");
+            System.out.println("=================================");
+            System.out.println("id_cliente: "+rs.getInt("cliente.id_cliente"));
+            System.out.println("id_cliente: "+rs.getString("cliente.codigo"));
+            System.out.println("id_cliente: "+rs.getString("cliente.nome"));
+            System.out.println("id_cliente: "+rs.getString("cliente.data_nasc"));
+            System.out.println("id_cliente: "+rs.getString("cliente.sexo"));
+            System.out.println("id_cliente: "+rs.getString("cliente.rg"));
+            System.out.println("id_cliente: "+rs.getString("cliente.cpf"));
+            System.out.println("id_cliente: "+rs.getString("cliente.email"));
+            System.out.println("id_cliente: "+rs.getString("cliente.telefone"));
+            System.out.println("id_cliente: "+rs.getString("cliente.status"));
+            //System.out.println("id_cliente: "+rs.getInt("cliente.id_endereco"));
+            
+            
             //lendo vários dados
             while (rs.next()) {
             	System.out.println("dentro de while");
@@ -128,27 +148,88 @@ public class ClienteDAO implements IDAO {
                 cliente.setEmail(rs.getString("cliente.email"));
                 cliente.setTelefone(rs.getString("cliente.telefone"));
                 cliente.setStatus(rs.getString("cliente.status"));
+              //  endereco.setId(rs.getInt("cliente.id_endereco"));
+              //  enderecos.add(endereco);
+              //  cliente.setEnderecos(enderecos);
             	clientes.add(cliente);
             	
             	System.out.println("dados lidos");
             }
+            rs.close();
+        } catch (SQLException ex) {
+            System.out.println("falha de leitura em prealterar");
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt, rs);
+        }*/
+        
+		Connection con=null;
+		try {
+			con = ConnectionFactory.getConnection();
+		} catch (SQLException ex) {
+			// TODO Auto-generated catch block
+			ex.printStackTrace();
+		}
+        //criando statemment
+        PreparedStatement stmt = null;
+        //criando result de dados obtidos de banco de dados
+        ResultSet rs = null;
+        //criando list de dados lidos
+        List<EntidadeDominio> clientes = new ArrayList<EntidadeDominio>();
+        //cast de Cliente
+        Cliente c = (Cliente) entidade;
+        
+        Endereco endereco = new Endereco();
+        List<Endereco> enderecos = new ArrayList<>();
+        
+        
+        //comando SQL a ser feito
+        String filtro = c.getCodigo();
+        System.out.println("filtro: "+filtro);
+        
+        try {
+        	String sql = "SELECT * FROM cliente WHERE cliente.codigo like '%" + filtro+"%'";
+        	
+            //comando inserido no SGBD
+            stmt = con.prepareStatement(sql);
+            //stmt.setString(1, filtro);
+            rs = stmt.executeQuery();
+            //lendo vários dados
+            while (rs.next()) {
+            	Cliente cliente = new Cliente();
+            	cliente.setId(rs.getInt("cliente.id_cliente"));
+                cliente.setCodigo(rs.getString("cliente.codigo"));
+                cliente.setNome(rs.getString("cliente.nome"));
+                cliente.setDtNasc(rs.getString("cliente.data_nasc"));
+                cliente.setSexo(rs.getString("cliente.sexo"));
+                cliente.setRg(rs.getString("cliente.rg"));
+                cliente.setCpf(rs.getString("cliente.cpf"));
+                cliente.setEmail(rs.getString("cliente.email"));
+                cliente.setTelefone(rs.getString("cliente.telefone"));
+                cliente.setStatus(rs.getString("cliente.status"));
+                endereco.setId(rs.getInt("cliente.id_endereco"));
+                enderecos.add(endereco);
+                cliente.setEnderecos(enderecos);
+            	clientes.add(cliente);
+            	
+            	System.out.println("dados lidos");
+            }
+            rs.close();
         } catch (SQLException ex) {
             System.out.println("falha de leitura");
         } finally {
             ConnectionFactory.closeConnection(con, stmt, rs);
         }
         //retornando dados lidos
-        return clientes;
-	}
+        return clientes;	}
 
 	@Override
 	public List<EntidadeDominio> pesquisar(EntidadeDominio entidade) {
 		Connection con=null;
 		try {
 			con = ConnectionFactory.getConnection();
-		} catch (SQLException e) {
+		} catch (SQLException ex) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ex.printStackTrace();
 		}
         //criando statemment
         PreparedStatement stmt = null;
@@ -165,15 +246,22 @@ public class ClienteDAO implements IDAO {
         
         try {
         	String sql = "SELECT * FROM cliente";
-        
+        	
             if(filtro!="") {
-            	sql =sql + "WHERE cliente.codigo like ? OR cliente.nome like ? "
+            	sql =sql + " WHERE cliente.codigo like '%" + filtro 
+            			+"%' OR cliente.nome like '%" + filtro
+            			+ "%' OR cliente.data_nasc like '%" + filtro
+            			+ "%' OR cliente.rg like '%" + filtro
+            			+ "%' OR cliente.cpf like '%" + filtro +"%'"
+            			;
+            	
+        //    	sql =sql + " WHERE cliente.codigo like ? OR cliente.nome like ? "
             			;
             	//comando inserido no SGBD
             	stmt = con.prepareStatement(sql);
-            	stmt.setString(1, '%'+filtro+'%');
+            	/*stmt.setString(1, '%'+filtro+'%');
             	stmt.setString(2, '%'+filtro+'%');
-            	
+            */	
             }
             else
             	stmt = con.prepareStatement(sql);
@@ -189,12 +277,11 @@ public class ClienteDAO implements IDAO {
                 cliente.setNome(rs.getString("cliente.nome"));
                 cliente.setEmail(rs.getString("cliente.email"));
             	cliente.setStatus(rs.getString("cliente.status"));
-            	System.out.println("leitura feita");
-            	
             	
             	clientes.add(cliente);
                 
             }
+            rs.close();
         } catch (SQLException ex) {
             System.out.println("falha de leitura");
         } finally {

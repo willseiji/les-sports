@@ -25,7 +25,6 @@ public class ClienteServico implements IServico {
 	@Override
 	public List<EntidadeDominio> salvar(EntidadeDominio entidade) throws SQLException {
 		
-		System.out.println("servico dao endereco");
 		cliente = (Cliente) entidade;
 		
 		endereco = cliente.getEnderecos().get(0);
@@ -33,16 +32,11 @@ public class ClienteServico implements IServico {
 		
 		int id_endereco = daoEndereco.salvar(entidade);
 		
-		System.out.println("fora de dao endereco");
-		System.out.println("id_Endereco: "+id_endereco);
-		
 		cliente.getEnderecos().get(0).setId(id_endereco);
 //		endereco.setId(id_endereco);
 		entidade = (EntidadeDominio) cliente;
 		
 		int id_cliente = daoCliente.salvar(entidade);
-		System.out.println("fora de dao cliente");
-		System.out.println("id_cliente: "+id_cliente);
 		
 		Usuario u = new Usuario();
 		u.setNome(cliente.getUsuario().getNome());
@@ -67,21 +61,59 @@ public class ClienteServico implements IServico {
 		
 		List<Endereco> enderecos = new ArrayList<>();
 		endereco = new Endereco();
+		Endereco end = new Endereco();
+		
+		
 		List<EntidadeDominio> ents = daoCliente.prealterar(entidade);
-		/*cliente = (Cliente) entidade;
+		
+		cliente = (Cliente) ents.get(0);
+		
 		System.out.println("===========+++============");
+		/*System.out.println("cliente: "+cliente);
+		System.out.println("enderecos: "+cliente.getEnderecos());
 		System.out.println("size: "+cliente.getEnderecos().size());
-		for(int i=0;i<cliente.getEnderecos().size();i++) {
-			System.out.println("id endereco: "+cliente.getEnderecos().get(i).getId());
-			endereco = (Endereco) daoEndereco.prealterar(cliente.getEnderecos().get(i));
-			enderecos.add(endereco);
+		System.out.println("===========+++============");
+		*/
+		
+		for(int i=0;i<ents.size();i++) {
+			cliente = (Cliente) ents.get(i);
+			System.out.println("size no servico: "+cliente.getEnderecos().size());
+			//if(cliente.getEnderecos().size()!=0) {	
+			for(int j=0;j<cliente.getEnderecos().size();j++) {
+				endereco = cliente.getEnderecos().get(j);
+				Endereco ender = new Endereco();
+				EntidadeDominio ent2 = new EntidadeDominio();
+				
+				System.out.println("id endereco: "+endereco.getId());
+				int id_endereco = endereco.getId();
+				Endereco enderecoDTO = new Endereco();
+				enderecoDTO.setId(id_endereco);
+				ent2 = (EntidadeDominio) enderecoDTO;
+				
+				
+				ents = daoEndereco.prealterar(ent2);
+				if(ents.size()>0) {
+					System.out.println("size no servico apos prealterar: "+ents.size());
+					ender = (Endereco) ents.get(0);
+					System.out.println("ender no servico apos prealterar: "+ender.getRua());
+				}
+				else {
+					ender=null;
+				}
+				
+				
+				enderecos.add(ender);
+			}
+			cliente.setEnderecos(enderecos);
+			//}
 		}
-		cliente.setEnderecos(enderecos);*/
+		
 		EntidadeDominio ent = (EntidadeDominio) cliente;
 		
-		//List<EntidadeDominio> ents = new ArrayList<EntidadeDominio>();
-		//ents.add(ent);
-		return ents;	
+		List<EntidadeDominio> entidades = new ArrayList<>();
+		
+		entidades.add(ent);
+		return entidades;	
 	}
 
 	@Override
