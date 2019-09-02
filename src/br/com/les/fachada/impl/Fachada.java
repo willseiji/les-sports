@@ -11,11 +11,13 @@ import br.com.les.dao.IDAO;
 import br.com.les.dominio.impl.Cliente;
 import br.com.les.dominio.impl.Endereco;
 import br.com.les.dominio.impl.EntidadeDominio;
+import br.com.les.dominio.impl.Pedido;
 import br.com.les.dominio.impl.Produto;
 import br.com.les.fachada.IFachada;
 import br.com.les.servico.IServico;
 import br.com.les.servico.impl.ClienteServico;
 import br.com.les.servico.impl.EnderecoServico;
+import br.com.les.servico.impl.PedidoServico;
 import br.com.les.servico.impl.ProdutoServico;
 import br.com.les.strategies.IStrategy;
 import br.com.les.strategies.impl.StDadosCEPCliente;
@@ -31,10 +33,11 @@ public class Fachada implements IFachada {
 
 	
 	public Fachada() {
-    	//=======================================
+    	//--------------------------
     	//strategies para produto
 		StValidarPeso vPeso = new StValidarPeso();
 		
+		//==========================================
         //cria lista de regras de negocio para salvar Produto
         List<IStrategy> rnsProdutoSalvar = new ArrayList<IStrategy>();
         rnsProdutoSalvar.add(vPeso);
@@ -51,10 +54,11 @@ public class Fachada implements IFachada {
         //cria lista de regras de negocio para Excluir Produto
         List<IStrategy> rnsProdutoExcluir = new ArrayList<IStrategy>();
 
-    	//=======================================
+    	//----------------------------
     	//strategies para cliente
         StValidarCPF vCPF = new StValidarCPF();
         
+      //==========================================
         //cria lista de regras de negocio para salvar Produto
         List<IStrategy> rnsClienteSalvar = new ArrayList<IStrategy>();
         rnsClienteSalvar.add(vCPF);
@@ -71,32 +75,50 @@ public class Fachada implements IFachada {
         //cria lista de regras de negocio para Excluir Produto
         List<IStrategy> rnsClienteExcluir = new ArrayList<IStrategy>();
         
-    	//=======================================
+    	//--------------------------------
     	//strategies para cliente
         StDadosCEPCliente vCEP = new StDadosCEPCliente();
         
         
-        //cria lista de regras de negocio para salvar Produto
+        //==========================================
+        //cria lista de regras de negocio para salvar Endereco
         List<IStrategy> rnsEnderecoSalvar = new ArrayList<IStrategy>();
         rnsEnderecoSalvar.add(vCEP);
         
-      //cria lista de regras de negocio para pesquisar Produto
+      //cria lista de regras de negocio para pesquisar Endereco
         List<IStrategy> rnsEnderecoPesquisar = new ArrayList<IStrategy>();
         
-        //cria lista de regras de negocio para pre Alterar Produto
+        //cria lista de regras de negocio para pre Alterar Endereco
         List<IStrategy> rnsEnderecoPreAlterar = new ArrayList<IStrategy>();
         
-        //cria lista de regras de negocio para Alterar Produto
+        //cria lista de regras de negocio para Alterar Endereco
         List<IStrategy> rnsEnderecoAlterar = new ArrayList<IStrategy>();
         
-        //cria lista de regras de negocio para Excluir Produto
+        //cria lista de regras de negocio para Excluir Endereco
         List<IStrategy> rnsEnderecoExcluir = new ArrayList<IStrategy>();
 
+      //==========================================
+        //cria lista de regras de negocio para salvar Pedido
+        List<IStrategy> rnsPedidoSalvar = new ArrayList<IStrategy>();
+        
+        
+      //cria lista de regras de negocio para pesquisar Endereco
+        List<IStrategy> rnsPedidoPesquisar = new ArrayList<IStrategy>();
+        
+        //cria lista de regras de negocio para pre Alterar Endereco
+        List<IStrategy> rnsPedidoPreAlterar = new ArrayList<IStrategy>();
+        
+        //cria lista de regras de negocio para Alterar Endereco
+        List<IStrategy> rnsPedidoAlterar = new ArrayList<IStrategy>();
+        
+        //cria lista de regras de negocio para Excluir Endereco
+        List<IStrategy> rnsPedidoExcluir = new ArrayList<IStrategy>();
         
         //mapeando classes com lista de estrategies
         Map<String, List<IStrategy>> rnsProduto = new HashMap<String, List<IStrategy>>();
         Map<String, List<IStrategy>> rnsCliente = new HashMap<String, List<IStrategy>>();
         Map<String, List<IStrategy>> rnsEndereco = new HashMap<String, List<IStrategy>>();
+        Map<String, List<IStrategy>> rnsPedido = new HashMap<String, List<IStrategy>>();
         
         
         
@@ -120,23 +142,32 @@ public class Fachada implements IFachada {
         rnsEndereco.put("ALTERAR", rnsEnderecoAlterar);
         rnsEndereco.put("EXCLUIR", rnsEnderecoExcluir);
         
+        rnsPedido.put("SALVAR", rnsPedidoSalvar);
+        rnsPedido.put("PESQUISAR", rnsPedidoPesquisar);
+        rnsPedido.put("PREALTERAR", rnsPedidoPreAlterar);
+        rnsPedido.put("ALTERAR", rnsPedidoAlterar);
+        rnsPedido.put("EXCLUIR", rnsPedidoExcluir);
+        
         //rns = new HashMap<String, List<IStrategy>>();
         rns = new HashMap<String, Map<String, List<IStrategy>>>();
         rns.put(Produto.class.getName(), rnsProduto);
         rns.put(Cliente.class.getName(), rnsCliente);
         rns.put(Endereco.class.getName(), rnsEndereco);
+        rns.put(Pedido.class.getName(), rnsPedido);
         
         
         //instanciando Servicos
         IServico servicoProduto = new ProdutoServico();
         IServico servicoCliente = new ClienteServico();
         IServico servicoEndereco = new EnderecoServico();
+        IServico servicoPedido = new PedidoServico();
         
         //mapeando classes com Servicos
         servicos = new HashMap<String,IServico>();
         servicos.put(Produto.class.getName(),servicoProduto);
         servicos.put(Cliente.class.getName(),servicoCliente);
         servicos.put(Endereco.class.getName(),servicoEndereco);
+        servicos.put(Pedido.class.getName(),servicoPedido);
         
 	
 	}

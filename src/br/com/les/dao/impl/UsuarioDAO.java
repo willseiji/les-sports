@@ -8,123 +8,107 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+
 import br.com.les.dao.ConnectionFactory;
 import br.com.les.dao.IDAO;
 import br.com.les.dominio.impl.Cliente;
 import br.com.les.dominio.impl.EntidadeDominio;
+import br.com.les.dominio.impl.Produto;
 import br.com.les.dominio.impl.Usuario;
 
 public class UsuarioDAO implements IDAO {
 
-	
-	
+	Usuario usuario = new Usuario();
+	protected static UsuarioDAO instance;
+	protected EntityManager em;
+
+	public static UsuarioDAO getInstance(){
+		if (instance == null){
+			instance = new UsuarioDAO();
+		}
+
+		return instance;
+	}
+
+	public UsuarioDAO() {
+		em = getEntityManager();
+	}
+
+	private EntityManager getEntityManager() {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("les");
+
+		if (em == null) {
+			em = emf.createEntityManager();
+		}
+
+		return em;
+	}
+
 	@Override
-	public int salvar(EntidadeDominio entidade) throws SQLException {
+	public EntidadeDominio salvar(EntidadeDominio entidade) {
+		Usuario usuario = (Usuario) entidade;
 		
-		Usuario u = (Usuario) entidade;
-		int id_Usuario=0;
-		
-		Connection con=null;
 		try {
-			con = ConnectionFactory.getConnection();
-		} catch (SQLException ex) {
-			// TODO Auto-generated catch block
-			System.out.println("conexao recusada");
+			em.getTransaction().begin();
+			em.persist(usuario);
+			em.flush();
+			em.getTransaction().commit();
+		} catch (Exception ex) {
 			ex.printStackTrace();
+			em.getTransaction().rollback();
 		}
-		
-		//criando statemment
-        PreparedStatement stmt = null;
-        ResultSet rs;
-        
-        //comando SQL a ser feito
-        String sql = "INSERT INTO usuario(nome, senha, codigoCliente) "
-        		+ " VALUES(?,?,?)";
-        //determinando valores a serem encontrados no banco de dados
-        
-        try {
-            //comando inserido no SGBD
-            stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            stmt.setString(1, u.getNome());
-            stmt.setString(2, u.getSenha());
-            stmt.setString(3, u.getCodCliente());
-            
-            stmt.executeUpdate();
-            rs = stmt.getGeneratedKeys();
-            
-           while(rs.next()) {
-            	id_Usuario=rs.getInt(1);
-            
-            }
-            rs.close();
-            //JOptionPane.showMessageDialog(null, "Salvo com sucesso");
-        } catch (SQLException ex) {
-            System.out.println("Erro ao salvar: " + ex);
-            //JOptionPane.showMessageDialog(null, "Erro ao salvar:" + ex);
-        } finally {
-            ConnectionFactory.closeConnection(con, stmt);
-        }
 
-		
-		return id_Usuario;
+		return usuario;
+
 
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public List<EntidadeDominio> pesquisar(EntidadeDominio entidade) {
-		Connection con=null;
-		try {
-			con = ConnectionFactory.getConnection();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+		Usuario u = (Usuario) entidade;
+		String filtro = u.getNome();
+
+
+		String sql = "FROM " + Usuario.class.getName(); 
+		if(filtro!="") {
+			sql =sql + " WHERE nome like :paramNome"
+					;
 		}
-        //criando statemment
-        PreparedStatement stmt = null;
-        //criando result de dados obtidos de banco de dados
-        ResultSet rs = null;
-        //criando list de dados lidos
-        List<EntidadeDominio> usuarios = null;
-        Usuario u = (Usuario) entidade;
-        
-        //comando SQL a ser feito
-        System.out.println("login: "+u.getNome());
-        System.out.println("senha: "+u.getSenha());
-        try {
-        	usuarios = new ArrayList<EntidadeDominio>();
-        	String sql = "SELECT * from usuario where nome = ? and senha = ?";
-            
-            stmt = con.prepareStatement(sql);
-            stmt.setString(1,u.getNome());
-            stmt.setString(2, u.getSenha());
-            
-            rs = stmt.executeQuery();
-            //lendo vários dados
-            while (rs.next()) {
-            	Usuario usuario = new Usuario();
-                usuario.setCodCliente(rs.getString("codigoCliente"));
-                usuarios.add(usuario);
-            }
-        } catch (SQLException ex) {
-            System.out.println("falha de leitura");
-        } finally {
-            ConnectionFactory.closeConnection(con, stmt, rs);
-        }
-        //retornando dados lidos
-        
-        return usuarios;
+		Query query = em.createQuery(sql);
+		if(filtro!="") 
+			query.setParameter("paramNome", "%"+filtro+"%");
+
+		List<EntidadeDominio> entidades = query.getResultList();
+		return entidades;
 
 	}
 
 	@Override
-	public List<EntidadeDominio> prealterar(EntidadeDominio entidade) {
-		// TODO Auto-generated method stub
-		return null;
+	public EntidadeDominio prealterar(int id) {
+
+		return em.find(Usuario.class, id);
+
 	}
 
 	@Override
 	public void alterar(EntidadeDominio entidade) {
-		// TODO Auto-generated method stub
+		Usuario usuario = (Usuario) entidade;
+		
+
+		try {
+			em.getTransaction().begin();
+			em.merge(usuario);
+			em.getTransaction().commit();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			em.getTransaction().rollback();
+		}
 
 	}
 
@@ -133,5 +117,6 @@ public class UsuarioDAO implements IDAO {
 		// TODO Auto-generated method stub
 
 	}
+
 
 }

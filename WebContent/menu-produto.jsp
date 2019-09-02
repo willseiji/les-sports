@@ -170,7 +170,8 @@
 												<td class="center">${itemProdutos[5]}</td>
 												<td class="center">${itemProdutos[6]}</td>
                                                 <td class="center">${itemProdutos[7]}</td>
-                                                <input type="hidden" id="myInputProduto" name="txt_NmCodigo" value="">
+                                                <input type="hidden" id="myInputProduto" name="txt_IdProduto" value="">
+                                                <input type="hidden" name="view" value="adm">
                                                 <td><button type  ="submit" class="btn btn-warning btn-mini" name="operacao" formaction="PreAlterarProduto" id="bttAlterar" 
                                     			value="PREALTERAR">Editar</button>
                                                     <button class="btn btn-inverse btn-mini" name="operacao" formaction="PreAlterarEstoque" id="bttAlterar" 
@@ -272,7 +273,7 @@
         function myFunctionName(x) {
             var myTable = document.getElementById('myTable');
             var r = x.rowIndex;
-            var codProduto = myTable.rows[r].cells[1].innerText;
+            var codProduto = myTable.rows[r].cells[0].innerText;
             document.getElementById("myInputProduto").value = codProduto;
         }
     </script>

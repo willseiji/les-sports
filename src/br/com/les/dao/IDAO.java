@@ -6,9 +6,9 @@ import java.util.List;
 import br.com.les.dominio.impl.EntidadeDominio;
 
 public interface IDAO {
-	public int salvar(EntidadeDominio entidade) throws SQLException;
+	public EntidadeDominio salvar(EntidadeDominio entidade);
     public List<EntidadeDominio> pesquisar(EntidadeDominio entidade);
-    public List<EntidadeDominio> prealterar(EntidadeDominio entidade);
+    public EntidadeDominio prealterar(int id);
     public void alterar(EntidadeDominio entidade);
     public void excluir(EntidadeDominio entidade) ;
     

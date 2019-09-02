@@ -40,6 +40,7 @@ public class ClienteViewHelper implements IViewHelper {
 		cliente.setCpf("");
 		cliente.setEmail("");
 		cliente.setTelefone("");
+		cliente.setStatus("ATIVO");
 		usuario.setNome("");
 		usuario.setSenha("");
 		endereco.setRua("");
@@ -144,10 +145,10 @@ public class ClienteViewHelper implements IViewHelper {
 			//recebendo valor de pesquisa
 			System.out.println("inicio de prealterar");
 			
-			String codCliente = request.getParameter("txt_NmCodigo");
-			System.out.println("codigo em pre_alterar: "+codCliente);
+			String idCliente = request.getParameter("txt_IdCliente");
+			System.out.println("id em pre_alterar: "+idCliente);
 			
-			cliente.setCodigo(codCliente);
+			cliente.setId(Integer.parseInt(idCliente));
 			//caso botão apertado foi o de 'value = SALVAR'
 		}else if (operacao.equals("ALTERAR")  ){
 			
@@ -240,6 +241,7 @@ public class ClienteViewHelper implements IViewHelper {
 	            	System.out.println("email: "+cliente.getEmail());
 	            	System.out.println("status: "+cliente.getStatus());
 					
+	            	itensCliente.add(Integer.toString(cliente.getId()));
 	            	itensCliente.add(cliente.getCodigo());
 					itensCliente.add(cliente.getNome());
 					itensCliente.add(cliente.getEmail());

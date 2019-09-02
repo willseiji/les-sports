@@ -22,6 +22,7 @@ import br.com.les.dominio.impl.EntidadeDominio;
 import br.com.les.viewhelper.IViewHelper;
 import br.com.les.viewhelper.impl.ClienteViewHelper;
 import br.com.les.viewhelper.impl.EnderecoViewHelper;
+import br.com.les.viewhelper.impl.PedidoViewHelper;
 import br.com.les.viewhelper.impl.ProdutoViewHelper;
 
 /**
@@ -64,6 +65,14 @@ public class Servlet extends HttpServlet {
           vhs.put("/les-codigo/ExcluirEndereco", new EnderecoViewHelper());
           vhs.put("/les-codigo/PreAlterarEndereco", new EnderecoViewHelper());
           vhs.put("/les-codigo/AlterarEndereco", new EnderecoViewHelper());
+          
+          //mapeando URI com tipo de instância de endereco para View Helper
+          vhs.put("/les-codigo/CadastrarPedidoCarrinho", new PedidoViewHelper());
+          vhs.put("/les-codigo/FinalizarPedido", new PedidoViewHelper());
+          vhs.put("/les-codigo/PesquisarPedido", new PedidoViewHelper());
+          vhs.put("/les-codigo/ExcluirPedido", new PedidoViewHelper());
+          vhs.put("/les-codigo/PreAlterarPedido", new PedidoViewHelper());
+          vhs.put("/les-codigo/AlterarEndereco", new PedidoViewHelper());
           
           
           //mapeando 'operação' com instância para Command

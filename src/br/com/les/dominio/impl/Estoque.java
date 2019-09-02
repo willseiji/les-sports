@@ -2,12 +2,29 @@ package br.com.les.dominio.impl;
 
 public class Estoque extends EntidadeDominio {
 	
+	private int id;
+	private String data;
 	private String codigo;
 	private int volumeMinimo;
 	private int volumeMaximo;
 	private int volume;
 	private double precoCompra;
 	private double precoVenda;
+	
+	
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getData() {
+		return data;
+	}
+	public void setData(String data) {
+		this.data = data;
+	}
 	public String getCodigo() {
 		return codigo;
 	}

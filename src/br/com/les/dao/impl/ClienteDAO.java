@@ -8,287 +8,117 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+
 import br.com.les.dao.ConnectionFactory;
 import br.com.les.dao.IDAO;
 import br.com.les.dominio.impl.Cliente;
 import br.com.les.dominio.impl.Endereco;
 import br.com.les.dominio.impl.EntidadeDominio;
 import br.com.les.dominio.impl.Produto;
+import br.com.les.dominio.impl.Usuario;
 
 public class ClienteDAO implements IDAO {
 
-	@Override
-	public int salvar(EntidadeDominio entidade) throws SQLException {
-		Cliente c = (Cliente) entidade;
-		int id_Cliente=0;
-		
-		Connection con=null;
-		try {
-			con = ConnectionFactory.getConnection();
-		} catch (SQLException ex) {
-			// TODO Auto-generated catch block
-			System.out.println("conexao recusada");
-			ex.printStackTrace();
-		}
-		
-		//criando statemment
-        PreparedStatement stmt = null;
-        ResultSet rs;
-        
-        //comando SQL a ser feito
-        String sql = "INSERT INTO cliente(codigo, nome, sexo, data_nasc, rg, cpf, telefone, email,status,id_endereco) "
-        		+ " VALUES(?,?,?,?,?,?,?,?,?,?)";
-        //determinando valores a serem encontrados no banco de dados
-        
-        try {
-            //comando inserido no SGBD
-            stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            stmt.setString(1, geradorCodigo(c.getNome()));
-            stmt.setString(2, c.getNome());
-            stmt.setString(3, c.getSexo());
-            stmt.setString(4, c.getDtNasc());
-            stmt.setString(5, c.getRg());
-            stmt.setString(6, c.getCpf());
-            stmt.setString(7, c.getTelefone());
-            stmt.setString(8, c.getEmail());
-            stmt.setString(9, "ATIVO");
-            stmt.setInt(10, c.getEnderecos().get(0).getId());
-            stmt.executeUpdate();
-            rs = stmt.getGeneratedKeys();
-            
-           while(rs.next()) {
-            	id_Cliente=rs.getInt(1);
-            
-            }
-            rs.close();
-            //JOptionPane.showMessageDialog(null, "Salvo com sucesso");
-        } catch (SQLException ex) {
-            System.out.println("Erro ao salvar: " + ex);
-            //JOptionPane.showMessageDialog(null, "Erro ao salvar:" + ex);
-        } finally {
-            ConnectionFactory.closeConnection(con, stmt);
-        }
+	
+	Cliente cliente = new Cliente();
+	Usuario usuario = new Usuario();
+	protected static ClienteDAO instance;
+	protected EntityManager em;
 
+	public static ClienteDAO getInstance(){
+		if (instance == null){
+			instance = new ClienteDAO();
+		}
+
+		return instance;
+	}
+
+	public ClienteDAO() {
+		em = getEntityManager();
+	}
+
+	private EntityManager getEntityManager() {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("les");
+
+		if (em == null) {
+			em = emf.createEntityManager();
+		}
+
+		return em;
+	}
+	
+	@Override
+	public EntidadeDominio salvar(EntidadeDominio entidade) {
+		Cliente cliente = (Cliente) entidade;
+		System.out.println("antes de try");
+		try {
+			System.out.println("dentro de try");
+			em.getTransaction().begin();
+			System.out.println("antes de persist");
+			em.persist(cliente);
+			System.out.println("depois de persist");
+			em.flush();
+			System.out.println("antes de commit");
+			em.getTransaction().commit();
+			System.out.println("depois de commit");
+		} catch (Exception ex) {
+			System.out.println("dentro de catch");
+			ex.printStackTrace();
+			em.getTransaction().rollback();
+		}
+		System.out.println("cliente: "+cliente);
 		
-		return id_Cliente;
+		return cliente;
+
+
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<EntidadeDominio> pesquisar(EntidadeDominio entidade) {
+
+
+		Cliente c = (Cliente) entidade;
+		String filtro = c.getNome();
+
+
+		String sql = "FROM " + Cliente.class.getName(); 
+		if(filtro!="") {
+			sql =sql + " WHERE nome like :paramNome OR codigo like :paramNome OR email like :paramNome "
+					+ "OR rg like :paramNome OR cpf like :paramNome OR status like :paramNome"
+					;
+		}
+		Query query = em.createQuery(sql);
+		if(filtro!="") 
+			query.setParameter("paramNome", "%"+filtro+"%");
+
+		List<EntidadeDominio> entidades = query.getResultList();
+		return entidades;
+
+	}
+
+	@Override
+	public EntidadeDominio prealterar(int id) {
+		return em.find(Cliente.class, id);
 	}
 
 	@Override
 	public void alterar(EntidadeDominio entidade) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public List<EntidadeDominio> prealterar(EntidadeDominio entidade) {
-		System.out.println("dao prealterar");
-        /*Connection con=null;
-
+		Cliente cliente = (Cliente) entidade;
+		System.out.println("------------------------");
 		try {
-			con = ConnectionFactory.getConnection();
-		} catch (SQLException ex) {
-			// TODO Auto-generated catch block
+			em.getTransaction().begin();
+			em.merge(cliente);
+			em.getTransaction().commit();
+		} catch (Exception ex) {
 			ex.printStackTrace();
+			em.getTransaction().rollback();
 		}
-        //criando statemment
-        PreparedStatement stmt = null;
-        //criando result de dados obtidos de banco de dados
-        ResultSet rs = null;
-        //cast de Peca
-        Cliente c = (Cliente) entidade;
-        //Cliente cliente = new Cliente();
-        Produto produto = new Produto();
-        Endereco endereco = new Endereco();
-        List<EntidadeDominio> clientes = new ArrayList<>();
-        List<EntidadeDominio> produtos = new ArrayList<>();
-        List<Endereco> enderecos = new ArrayList<>();
-        */
-        //comando SQL a ser feito
-        
-        //String filtro = c.getCodigo();
-        /*
-        //String sql = "SELECT * FROM cliente WHERE cliente.codigo like '%" + filtro+"%'";
-        String sql = "SELECT * FROM cliente WHERE cliente.codigo like '%WIL00003%'";
-        //System.out.println("filtro: "+filtro);
-        System.out.println("sql: "+sql);
-        try {
-        	System.out.println("dentro de try");
-            //comando inserido no SGBD
-            stmt = con.prepareStatement(sql);
-            System.out.println("statement: "+stmt);
-            //stmt.setString(1, filtro);
-            System.out.println("antes de execute");
-            rs = stmt.executeQuery();
-            System.out.println("rs: "+rs);
-            System.out.println("depois de execute");
-            System.out.println("=================================");
-            System.out.println("id_cliente: "+rs.getInt("cliente.id_cliente"));
-            System.out.println("id_cliente: "+rs.getString("cliente.codigo"));
-            System.out.println("id_cliente: "+rs.getString("cliente.nome"));
-            System.out.println("id_cliente: "+rs.getString("cliente.data_nasc"));
-            System.out.println("id_cliente: "+rs.getString("cliente.sexo"));
-            System.out.println("id_cliente: "+rs.getString("cliente.rg"));
-            System.out.println("id_cliente: "+rs.getString("cliente.cpf"));
-            System.out.println("id_cliente: "+rs.getString("cliente.email"));
-            System.out.println("id_cliente: "+rs.getString("cliente.telefone"));
-            System.out.println("id_cliente: "+rs.getString("cliente.status"));
-            //System.out.println("id_cliente: "+rs.getInt("cliente.id_endereco"));
-            
-            
-            //lendo vários dados
-            while (rs.next()) {
-            	System.out.println("dentro de while");
-            	cliente.setId(rs.getInt("cliente.id_cliente"));
-                cliente.setCodigo(rs.getString("cliente.codigo"));
-                cliente.setNome(rs.getString("cliente.nome"));
-                cliente.setDtNasc(rs.getString("cliente.data_nasc"));
-                cliente.setSexo(rs.getString("cliente.sexo"));
-                cliente.setRg(rs.getString("cliente.rg"));
-                cliente.setCpf(rs.getString("cliente.cpf"));
-                cliente.setEmail(rs.getString("cliente.email"));
-                cliente.setTelefone(rs.getString("cliente.telefone"));
-                cliente.setStatus(rs.getString("cliente.status"));
-              //  endereco.setId(rs.getInt("cliente.id_endereco"));
-              //  enderecos.add(endereco);
-              //  cliente.setEnderecos(enderecos);
-            	clientes.add(cliente);
-            	
-            	System.out.println("dados lidos");
-            }
-            rs.close();
-        } catch (SQLException ex) {
-            System.out.println("falha de leitura em prealterar");
-        } finally {
-            ConnectionFactory.closeConnection(con, stmt, rs);
-        }*/
-        
-		Connection con=null;
-		try {
-			con = ConnectionFactory.getConnection();
-		} catch (SQLException ex) {
-			// TODO Auto-generated catch block
-			ex.printStackTrace();
-		}
-        //criando statemment
-        PreparedStatement stmt = null;
-        //criando result de dados obtidos de banco de dados
-        ResultSet rs = null;
-        //criando list de dados lidos
-        List<EntidadeDominio> clientes = new ArrayList<EntidadeDominio>();
-        //cast de Cliente
-        Cliente c = (Cliente) entidade;
-        
-        Endereco endereco = new Endereco();
-        List<Endereco> enderecos = new ArrayList<>();
-        
-        
-        //comando SQL a ser feito
-        String filtro = c.getCodigo();
-        System.out.println("filtro: "+filtro);
-        
-        try {
-        	String sql = "SELECT * FROM cliente WHERE cliente.codigo like '%" + filtro+"%'";
-        	
-            //comando inserido no SGBD
-            stmt = con.prepareStatement(sql);
-            //stmt.setString(1, filtro);
-            rs = stmt.executeQuery();
-            //lendo vários dados
-            while (rs.next()) {
-            	Cliente cliente = new Cliente();
-            	cliente.setId(rs.getInt("cliente.id_cliente"));
-                cliente.setCodigo(rs.getString("cliente.codigo"));
-                cliente.setNome(rs.getString("cliente.nome"));
-                cliente.setDtNasc(rs.getString("cliente.data_nasc"));
-                cliente.setSexo(rs.getString("cliente.sexo"));
-                cliente.setRg(rs.getString("cliente.rg"));
-                cliente.setCpf(rs.getString("cliente.cpf"));
-                cliente.setEmail(rs.getString("cliente.email"));
-                cliente.setTelefone(rs.getString("cliente.telefone"));
-                cliente.setStatus(rs.getString("cliente.status"));
-                endereco.setId(rs.getInt("cliente.id_endereco"));
-                enderecos.add(endereco);
-                cliente.setEnderecos(enderecos);
-            	clientes.add(cliente);
-            	
-            	System.out.println("dados lidos");
-            }
-            rs.close();
-        } catch (SQLException ex) {
-            System.out.println("falha de leitura");
-        } finally {
-            ConnectionFactory.closeConnection(con, stmt, rs);
-        }
-        //retornando dados lidos
-        return clientes;	}
 
-	@Override
-	public List<EntidadeDominio> pesquisar(EntidadeDominio entidade) {
-		Connection con=null;
-		try {
-			con = ConnectionFactory.getConnection();
-		} catch (SQLException ex) {
-			// TODO Auto-generated catch block
-			ex.printStackTrace();
-		}
-        //criando statemment
-        PreparedStatement stmt = null;
-        //criando result de dados obtidos de banco de dados
-        ResultSet rs = null;
-        //criando list de dados lidos
-        List<EntidadeDominio> clientes = new ArrayList<EntidadeDominio>();
-        //cast de Cliente
-        Cliente c = (Cliente) entidade;
-        
-        //comando SQL a ser feito
-        String filtro = c.getNome();
-        System.out.println("filtro: "+filtro);
-        
-        try {
-        	String sql = "SELECT * FROM cliente";
-        	
-            if(filtro!="") {
-            	sql =sql + " WHERE cliente.codigo like '%" + filtro 
-            			+"%' OR cliente.nome like '%" + filtro
-            			+ "%' OR cliente.data_nasc like '%" + filtro
-            			+ "%' OR cliente.rg like '%" + filtro
-            			+ "%' OR cliente.cpf like '%" + filtro +"%'"
-            			;
-            	
-        //    	sql =sql + " WHERE cliente.codigo like ? OR cliente.nome like ? "
-            			;
-            	//comando inserido no SGBD
-            	stmt = con.prepareStatement(sql);
-            	/*stmt.setString(1, '%'+filtro+'%');
-            	stmt.setString(2, '%'+filtro+'%');
-            */	
-            }
-            else
-            	stmt = con.prepareStatement(sql);
-            System.out.println("sql: "+sql);
-            
-            rs = stmt.executeQuery();
-            //lendo vários dados
-            while (rs.next()) {
-            	
-                Cliente cliente = new Cliente();
-                cliente.setId(rs.getInt("cliente.id_cliente"));
-                cliente.setCodigo(rs.getString("cliente.codigo"));
-                cliente.setNome(rs.getString("cliente.nome"));
-                cliente.setEmail(rs.getString("cliente.email"));
-            	cliente.setStatus(rs.getString("cliente.status"));
-            	
-            	clientes.add(cliente);
-                
-            }
-            rs.close();
-        } catch (SQLException ex) {
-            System.out.println("falha de leitura");
-        } finally {
-            ConnectionFactory.closeConnection(con, stmt, rs);
-        }
-        //retornando dados lidos
-        return clientes;
 	}
 
 	@Override
@@ -296,44 +126,8 @@ public class ClienteDAO implements IDAO {
 		// TODO Auto-generated method stub
 
 	}
-
-	public String geradorCodigo(String nome) {
-		Connection con=null;
-		String code = null;
-		try {
-			con = ConnectionFactory.getConnection();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        //criando statemment
-        PreparedStatement stmt = null;
-        //criando result de dados obtidos de banco de dados
-        ResultSet rs = null;
-        //criando list de dados lidos
-        //comando SQL a ser feito
-        String sql = "select id_cliente from cliente "
-        		+ "order by cliente.id_cliente desc limit 1";
-        int valorId=0;
-        String initCateg=null;
-        try {
-            //comando inserido no SGBD
-        	stmt = con.prepareStatement(sql);
-            rs = stmt.executeQuery();
-            while (rs.next()) {
-            	valorId = rs.getInt("id_cliente")+1;
-            	initCateg = nome.substring(0, 3);
-            }
-            String stValorId = String.format("%05d",valorId);
-            System.out.println("iniciais: "+initCateg);
-            System.out.println("valorId: "+stValorId);
-            code = initCateg.toUpperCase()+stValorId;
-            
-        } catch (SQLException ex) {
-            System.out.println("falha de leitura");
-        } finally {
-            ConnectionFactory.closeConnection(con, stmt, rs);
-        }
-        return code;
+	
+	public EntidadeDominio findUsuario(int id_usuario) {
+		return em.find(Cliente.class, id_usuario);
 	}
 }

@@ -133,20 +133,20 @@
                                                 <div style="width: 200px; margin-right: 20px; display: table-cell;">
                                                 	<div class="control-group">
                                                         Código
-                                                        <span class="input-xlarge uneditable-input">${itensProduto[0]}</span>
-                                                        <input type="hidden" class="form-control" name="txt_Codigo" value='${itensProduto[0]}'>
+                                                        <span class="input-xlarge uneditable-input">${itensProduto[1]}</span>
+                                                        <input type="hidden" class="form-control" name="txt_Codigo" value='${itensProduto[1]}'>
                                                 	</div>
                                                 </div>
                                                 <div style="width: 200px; margin-right: 20px; display: table-cell;">
                                                 	<div class="control-group">
                                                      	Nome
-                                                     	<input type="text" class="input-xlarge focused"  name ="txt_NmProduto" id="id_NmProduto" value='${itensProduto[1]}'>
+                                                     	<input type="text" class="input-xlarge focused"  name ="txt_NmProduto" id="id_NmProduto" value='${itensProduto[2]}'>
                                                 	</div>
                                                 </div>
                                                 <div style="width: 200px; display: table-cell;">
                                                     <div class="control-group">
                                                         Categoria
-                                                        <input type="text" class="input-xlarge focused" name ="txt_Categoria" id="id_Categoria" value='${itensProduto[2]}'>
+                                                        <input type="text" class="input-xlarge focused" name ="txt_Categoria" id="id_Categoria" value='${itensProduto[3]}'>
                                                     </div>
                                                 </div>
                                                 
@@ -155,19 +155,19 @@
                                             <div style="width: 200px; margin-right: 20px; display: table-cell;">
                                                     <div class="control-group">
                                                         Material
-                                                        <input type="text" class="input-xlarge focused" name ="txt_Material" id="id_Material" value='${itensProduto[3]}'>
+                                                        <input type="text" class="input-xlarge focused" name ="txt_Material" id="id_Material" value='${itensProduto[4]}'>
                                                     </div>
                                                 </div>
                                                 <div style="width: 200px; margin-right: 20px; display: table-cell;">
                                                     <div class="control-group">
                                                         Tamanho
-                                                        <input type="text" class="input-xlarge focused" name ="txt_Tamanho" id="id_Tamanho" value='${itensProduto[4]}'>
+                                                        <input type="text" class="input-xlarge focused" name ="txt_Tamanho" id="id_Tamanho" value='${itensProduto[5]}'>
                                                     </div>
                                                 </div>
                                                 <div style="width: 200px; display: table-cell;">
                                                     <div class="control-group">
                                                         Peso (g)
-                                                        <input type="text" class="input-xlarge focused" name ="txt_Peso" id="id_Peso" value='${itensProduto[5]}'>
+                                                        <input type="text" class="input-xlarge focused" name ="txt_Peso" id="id_Peso" value='${itensProduto[6]}'>
                                                     </div>
                                                 </div>
                                                 
@@ -177,19 +177,19 @@
                                             	<div style="width: 200px; margin-right: 20px; display: table-cell;">
                                                     <div class="control-group">
                                                         Fabricante
-                                                        <input type="text" class="input-xlarge focused" name ="txt_Fabricante" id="id_Fabricante" value='${itensProduto[6]}'>
+                                                        <input type="text" class="input-xlarge focused" name ="txt_Fabricante" id="id_Fabricante" value='${itensProduto[7]}'>
                                                     </div>
                                                 </div>
                                                 <div style="width: 200px; margin-right: 20px; display: table-cell;">
                                                     <div class="control-group">
                                                         Preço
-                                                        <span class="input-xlarge uneditable-input">${itensProduto[7]}</span>
+                                                        <span class="input-xlarge uneditable-input">${itensProduto[8]}</span>
                                                     </div>
                                                 </div>
                                                 <div style="width: 200px; display: table-cell;">
                                                     <div class="control-group">
                                                         Quantidade
-                                                        <span class="input-xlarge uneditable-input">${itensProduto[8]}</span>
+                                                        <span class="input-xlarge uneditable-input">${itensProduto[9]}</span>
                                                     </div>
                                                 </div>
                                                 
@@ -199,7 +199,7 @@
                                                     <div class="control-group">
                                                     <p>Descrição</p>
                                                         
-                                                        <textarea placeholder=" " style="width: 710px; height: 200px" name ="txt_Descricao" id="id_Descricao" >${itensProduto[9]}
+                                                        <textarea placeholder=" " style="width: 710px; height: 200px" name ="txt_Descricao" id="id_Descricao" >${itensProduto[10]}
                                                             </textarea>
                                                     
                                                     </div>
@@ -214,7 +214,7 @@
                                           <div class="control-group">
                                               <label class="control-label">Status</label>
                                               <div class="controls">
-                                                  <span class="input-xlarge uneditable-input">${itensProduto[10]}</span>
+                                                  <span class="input-xlarge uneditable-input">${itensProduto[11]}</span>
                                               </div>
                                           </div>
                                           <div class="control-group">

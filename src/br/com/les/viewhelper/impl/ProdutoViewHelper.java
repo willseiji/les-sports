@@ -25,14 +25,14 @@ public class ProdutoViewHelper implements IViewHelper {
 		String operacao = request.getParameter("operacao");
 
 		produto.setCodigoProd("");
-		produto.setNomeProd("");
+		produto.setNome("");
 		produto.setMaterial("");
 		produto.setPeso(0);
 		produto.setTamanho("");
 		produto.setCategoria("");
 		produto.setFabricante("");
 		produto.setDescricao("");
-		produto.setStatus("");
+		produto.setStatus("INATIVO");
 
 		//caso botão apertado foi o de 'value = SALVAR'
 		if (operacao.equals("SALVAR")  ){
@@ -48,7 +48,7 @@ public class ProdutoViewHelper implements IViewHelper {
 			
 			
 			if(!nmProduto.isEmpty()||!nmProduto.trim().equals("")){
-				produto.setNomeProd(nmProduto);
+				produto.setNome(nmProduto);
 			}
 			if(!nmMaterial.isEmpty()||!nmMaterial.trim().equals("")){
 				produto.setMaterial(nmMaterial);
@@ -77,6 +77,7 @@ public class ProdutoViewHelper implements IViewHelper {
 		}else if (operacao.equals("PESQUISAR")) {
 			//recebendo valor de pesquisa
 			String filtro = request.getParameter("txt_filtro");
+			System.out.println("filtro: "+filtro);
 			produto.setDescricao(filtro);
 		} else if (operacao.equals("EXCLUIR")) {
 			String idProduto = request.getParameter("txt_NmIdProduto");
@@ -84,9 +85,9 @@ public class ProdutoViewHelper implements IViewHelper {
 		}else if (operacao.equals("PREALTERAR")) {
 			//recebendo valor de pesquisa
 			System.out.println("inicio de prealterar");
-			String codProduto = request.getParameter("txt_NmCodigo");
-			System.out.println("codigo na VH na Home: "+codProduto );
-			produto.setCodigoProd(codProduto);
+			String idProduto = request.getParameter("txt_IdProduto");
+			System.out.println("id na VH na Home: "+idProduto );
+			produto.setId(Integer.parseInt(idProduto));
 			//caso botão apertado foi o de 'value = SALVAR'
 		}else if (operacao.equals("ALTERAR")  ){
 				
@@ -102,7 +103,7 @@ public class ProdutoViewHelper implements IViewHelper {
 
 				
 				if(!nmProduto.isEmpty()||!nmProduto.trim().equals("")){
-					produto.setNomeProd(nmProduto);
+					produto.setNome(nmProduto);
 				}
 				if(!nmMaterial.isEmpty()||!nmMaterial.trim().equals("")){
 					produto.setMaterial(nmMaterial);
@@ -162,6 +163,7 @@ public class ProdutoViewHelper implements IViewHelper {
 			List<List<String>> listaProdutos = new java.util.ArrayList<List<String>>();
 			int i;
 			request.getSession().setAttribute("resultado", resultado);
+			String view = request.getParameter("view");
 			//caso a leitura no banco de dados não tenha encontrado nenhum dado
 
 			if (resultado.getEntidades().isEmpty()) {
@@ -179,7 +181,7 @@ public class ProdutoViewHelper implements IViewHelper {
 					Produto produto = (Produto) resultado.getEntidades().get(i);
 					itensProduto.add(String.valueOf(produto.getId()));
 					itensProduto.add(produto.getCodigoProd());
-					itensProduto.add(produto.getNomeProd());
+					itensProduto.add(produto.getNome());
 					itensProduto.add(produto.getCategoria());
 					itensProduto.add(produto.getFabricante());
 					itensProduto.add(Integer.toString(produto.getQuantidade()));
@@ -195,12 +197,23 @@ public class ProdutoViewHelper implements IViewHelper {
 				}
 
 				request.setAttribute("listaProdutos", listaProdutos);
-				try {
-					request.getRequestDispatcher("menu-produto.jsp").forward(request, response);
-				} catch (ServletException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
+				
+				if(view.equals("adm")) {
+					try {
+						request.getRequestDispatcher("menu-produto.jsp").forward(request, response);
+					} catch (ServletException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}else {
+					try {
+						request.getRequestDispatcher("home.jsp").forward(request, response);
+					} catch (ServletException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
 			}//else
 
@@ -213,6 +226,7 @@ public class ProdutoViewHelper implements IViewHelper {
 			List<String> itensProduto = null;
 
 			request.getSession().setAttribute("resultado", resultado);
+			String view = request.getParameter("view");
 			
 			if (resultado.getEntidades().isEmpty()) {
 				System.out.println("está vazia");
@@ -231,14 +245,14 @@ public class ProdutoViewHelper implements IViewHelper {
 				itensProduto = new java.util.ArrayList<String>();
 				Produto produto = (Produto) resultado.getEntidades().get(0);
 				System.out.println("produto: "+produto);
-				System.out.println(produto.getNomeProd());
+				System.out.println(produto.getNome());
 				System.out.println(produto.getCategoria());
 				System.out.println(produto.getMaterial());
 				System.out.println(produto.getFabricante());
 				
-				
+				itensProduto.add(String.valueOf(produto.getId()));
 				itensProduto.add(produto.getCodigoProd());
-				itensProduto.add(produto.getNomeProd());
+				itensProduto.add(produto.getNome());
 				itensProduto.add(produto.getCategoria());
 				itensProduto.add(produto.getMaterial());
 				itensProduto.add(produto.getTamanho());
@@ -251,10 +265,19 @@ public class ProdutoViewHelper implements IViewHelper {
 
 				request.setAttribute("itensProduto", itensProduto);
 				response.setContentType("text/html;charset=UTF-8");
-				try {
-					request.getRequestDispatcher("alterar-produto.jsp").forward(request, response);
-				} catch (ServletException ex) {
-					Logger.getLogger(ProdutoViewHelper.class.getName()).log(Level.SEVERE, null, ex);
+				if(view.equals("adm")) {
+					try {
+						request.getRequestDispatcher("alterar-produto.jsp").forward(request, response);
+					} catch (ServletException ex) {
+						Logger.getLogger(ProdutoViewHelper.class.getName()).log(Level.SEVERE, null, ex);
+					}
+				}else {
+					try {
+						request.getRequestDispatcher("site-carrinho.jsp").forward(request, response);
+					} catch (ServletException ex) {
+						Logger.getLogger(ProdutoViewHelper.class.getName()).log(Level.SEVERE, null, ex);
+					}
+				
 				}
 
 			}

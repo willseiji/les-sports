@@ -15,7 +15,9 @@ import javax.servlet.http.HttpSession;
 
 import com.sun.org.apache.xml.internal.serialize.Printer;
 
+import br.com.les.dao.impl.ClienteDAO;
 import br.com.les.dao.impl.UsuarioDAO;
+import br.com.les.dominio.impl.Cliente;
 import br.com.les.dominio.impl.EntidadeDominio;
 import br.com.les.dominio.impl.Usuario;
 
@@ -40,6 +42,8 @@ public class ServletLogin extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		Usuario usuario = new Usuario();
+		
+		
 		List<Usuario> usuarios = new ArrayList<>();
 		PrintWriter out=response.getWriter();
 		
@@ -55,12 +59,21 @@ public class ServletLogin extends HttpServlet {
 		 
 		 if(entidades!=null) {
 			 
-			 String codigoCliente = user.getCodCliente();
-			 System.out.println("codigo: "+codigoCliente);
+			 int id_usuario = user.getId();
+			 System.out.println("id_user: "+id_usuario);
+			 Cliente cliente = new Cliente();
+			 ClienteDAO daoCliente = new ClienteDAO();
+			 
+			 cliente = (Cliente) daoCliente.findUsuario(id_usuario);
+			 System.out.println("cliente: "+cliente);
+			 System.out.println("cliente codigo: "+cliente.getCodigo());
 			 
 			 HttpSession session = request.getSession();
-			 session.setAttribute("codigoCliente",codigoCliente );
-			 request.getRequestDispatcher("login.jsp").forward(request,response);
+			 session.setAttribute("idCliente",cliente.getId());
+			 request.getRequestDispatcher("loginOutput.jsp").forward(request,response);
+			 
+			 int id = (int) session.getAttribute("idCliente");
+			 System.out.println("codigo na sessao: "+id);
 			 
 		 }else {
 			 System.out.println("falha de login");

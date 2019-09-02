@@ -39,7 +39,7 @@ public class ServletLogout extends HttpServlet {
 		ck.setMaxAge(0);
 		System.out.println("logout realizado");
 		response.addCookie(ck);*/
-		request.getRequestDispatcher("login.jsp").forward(request,response);
+		request.getRequestDispatcher("logoutOutput.jsp").forward(request,response);
 	}
 
 }

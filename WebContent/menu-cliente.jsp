@@ -157,12 +157,12 @@
 										<c:forEach var="itemClientes" items="${listaClientes}">
 											<c:if test="${not empty itemClientes}">
 											<tr class="odd gradeX"  onclick="myFunctionName(this)">
-											
-                                                <td><a style="text-decoration: underline"><span id="id_codigo">${itemClientes[0]}</span></a></td>
-                                                <td>${itemClientes[1]}</td>
+											<td style="display:none" id="id_produto">${itemClientes[0]}</td>
+                                                <td><a style="text-decoration: underline"><span id="id_codigo">${itemClientes[1]}</span></a></td>
                                                 <td>${itemClientes[2]}</td>
-												<td>${itemClientes[3]}</td>
-												<input type="hidden" id="myInputCliente" name="txt_NmCodigo" value="">
+                                                <td>${itemClientes[3]}</td>
+												<td>${itemClientes[4]}</td>
+												<input type="hidden" id="myInputCliente" name="txt_IdCliente" value="">
 												<input type="hidden" name="view" value="adm">
 												<td><button type  ="submit" class="btn btn-warning btn-mini" name="operacao" formaction="PreAlterarCliente" id="bttAlterar"
 												 

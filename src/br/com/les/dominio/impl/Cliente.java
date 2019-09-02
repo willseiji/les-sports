@@ -2,23 +2,75 @@ package br.com.les.dominio.impl;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name="cliente")
 public class Cliente extends EntidadeDominio{
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id_cliente")
+	private int id;
+	@Transient
+	private String data;
+	@Column(name="codigo")
 	private String codigo;
+	@Column(name="nome")
 	private String nome;
+	@Column(name="sexo")
 	private String sexo;
+	@Column(name="dtNasc")
 	private String dtNasc;
+	@Column(name="rg")
 	private String rg;
+	@Column(name="cpf")
 	private String cpf;
+	@Column(name="telefone")
 	private String telefone;
+	@Column(name="email")
 	private String email;
+	@Column(name="status")
 	private String status;
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_usuario")
 	private Usuario usuario;
+	//@OneToMany(mappedBy="cliente",cascade=CascadeType.ALL,fetch = FetchType.EAGER)
+	@Transient
 	private List<Endereco> enderecos;
 	
+	@OneToOne(mappedBy = "pedido")
+	private Pedido pedido;
 
 	
 	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getData() {
+		return data;
+	}
+
+	public void setData(String data) {
+		this.data = data;
+	}
+
 	public String getCodigo() {
 		return codigo;
 	}
