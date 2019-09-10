@@ -4,15 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
 @Table(name="produto")
+
 public class Produto extends EntidadeDominio {
 	
 	@Id
@@ -49,8 +52,9 @@ public class Produto extends EntidadeDominio {
 	private Imagem imagem = new Imagem();
 	@Transient
 	private List<Estoque> itensEstoque = new ArrayList<Estoque>();
-	
-	
+
+	@OneToOne(mappedBy = "produto")
+	private Item item;
 	
 	
 	public int getId() {

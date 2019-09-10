@@ -1,5 +1,6 @@
 package br.com.les.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -9,28 +10,29 @@ import javax.persistence.Query;
 
 import br.com.les.dao.IDAO;
 import br.com.les.dominio.impl.Cliente;
+import br.com.les.dominio.impl.Endereco;
 import br.com.les.dominio.impl.EntidadeDominio;
 import br.com.les.dominio.impl.Item;
-import br.com.les.dominio.impl.Pedido;
+import br.com.les.dominio.impl.Produto;
 import br.com.les.dominio.impl.Usuario;
 
-public class PedidoDAO implements IDAO {
+public class ItemDAO implements IDAO {
 
 
-	Pedido pedido = new Pedido();
-	Cliente cliente = new Cliente();
-	protected static PedidoDAO instance;
+	Item item = new Item();
+	Produto produto = new Produto();
+	protected static ItemDAO instance;
 	protected EntityManager em;
 
-	public static PedidoDAO getInstance(){
+	public static ItemDAO getInstance(){
 		if (instance == null){
-			instance = new PedidoDAO();
+			instance = new ItemDAO();
 		}
 
 		return instance;
 	}
 
-	public PedidoDAO() {
+	public ItemDAO() {
 		em = getEntityManager();
 	}
 
@@ -46,10 +48,16 @@ public class PedidoDAO implements IDAO {
 	
 	@Override
 	public EntidadeDominio salvar(EntidadeDominio entidade) {
-		Pedido pedido = (Pedido) entidade;
+		Item item = (Item) entidade;
+		
+		System.out.println("------------------------");
+		System.out.println("produto: "+item.getProduto().getNome());
+		System.out.println("qtde: "+item.getQtde());
+		
+		
 		try {
 			em.getTransaction().begin();
-			em.persist(pedido);
+			em.merge(item);
 			em.flush();
 			em.getTransaction().commit();
 		} catch (Exception ex) {
@@ -57,8 +65,7 @@ public class PedidoDAO implements IDAO {
 			em.getTransaction().rollback();
 		}
 		
-		System.out.println("ID: "+pedido.getId());
-		return pedido;
+		return item;
 
 
 	}
@@ -68,43 +75,35 @@ public class PedidoDAO implements IDAO {
 	public List<EntidadeDominio> pesquisar(EntidadeDominio entidade) {
 
 
-		Pedido pedido = (Pedido) entidade;
-		String filtro = pedido.getFiltro();
-		String id_cliente = Integer.toString(pedido.getId_cliente());
+		Item item = (Item) entidade;
+		String filtro = item.getFiltro();
 
-
-		String sql = "FROM " + Pedido.class.getName(); 
+		String sql = "FROM " + Item.class.getName(); 
 		if(filtro!="") {
-			sql =sql + " WHERE codigoPedido like :paramNome OR pedido.id_cliente like :paramId_Cliente"
+			sql =sql + " WHERE codigoItem like :paramNome "
 					;
 		}
 		Query query = em.createQuery(sql);
-		if(filtro!="") {
+		if(filtro!="") 
 			query.setParameter("paramNome", "%"+filtro+"%");
-			query.setParameter("paramId_Cliente", "%"+id_cliente+"%");
-			
-		}
 
 		List<EntidadeDominio> entidades = query.getResultList();
-		
-		
 		return entidades;
 
 	}
 
 	@Override
 	public EntidadeDominio prealterar(int id) {
-		return em.find(Pedido.class, id);
+		return em.find(Item.class, id);
 	}
 
 	@Override
 	public void alterar(EntidadeDominio entidade) {
-		Pedido pedido = (Pedido) entidade;
-		
+		Item item = (Item) entidade;
 		System.out.println("------------------------");
 		try {
 			em.getTransaction().begin();
-			em.merge(pedido);
+			em.merge(item);
 			em.getTransaction().commit();
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -119,19 +118,22 @@ public class PedidoDAO implements IDAO {
 
 	}
 	
-	public EntidadeDominio findPedido(int id_cliente) {
-		return em.find(Pedido.class, id_cliente);
-	}
-	
-	public List<EntidadeDominio> findListByIdCliente(int id_cliente) {
+	@SuppressWarnings("unchecked")
+	public List<EntidadeDominio> findByIdPedido(int id_pedido) {
 		
-		String sql = "FROM " + Pedido.class.getName(); 
-		sql =sql + " WHERE id_cliente = :paramNome"	;
+		System.out.println("id_pedido no findByIdPedido: "+id_pedido);
+		
+		String sql = "FROM " + Item.class.getName(); 
+		sql =sql + " WHERE id_pedido = :paramNome"	;
 		Query query = em.createQuery(sql);
-		query.setParameter("paramNome", id_cliente);
+		query.setParameter("paramNome", id_pedido );
+		
 		List<EntidadeDominio> entidades = query.getResultList();
 		return entidades;
 	}
-		
-
+	
+	
+	public EntidadeDominio findItem(int id_produto) {
+		return em.find(Item.class, id_produto);
+	}
 }

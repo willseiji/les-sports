@@ -25,6 +25,7 @@ import br.com.les.viewhelper.impl.EnderecoViewHelper;
 import br.com.les.viewhelper.impl.PedidoViewHelper;
 import br.com.les.viewhelper.impl.ProdutoViewHelper;
 
+
 /**
  * Servlet implementation class Servlet
  */
@@ -67,8 +68,7 @@ public class Servlet extends HttpServlet {
           vhs.put("/les-codigo/AlterarEndereco", new EnderecoViewHelper());
           
           //mapeando URI com tipo de instância de endereco para View Helper
-          vhs.put("/les-codigo/CadastrarPedidoCarrinho", new PedidoViewHelper());
-          vhs.put("/les-codigo/FinalizarPedido", new PedidoViewHelper());
+          vhs.put("/les-codigo/CadastrarPedido", new PedidoViewHelper());
           vhs.put("/les-codigo/PesquisarPedido", new PedidoViewHelper());
           vhs.put("/les-codigo/ExcluirPedido", new PedidoViewHelper());
           vhs.put("/les-codigo/PreAlterarPedido", new PedidoViewHelper());
@@ -95,6 +95,7 @@ public class Servlet extends HttpServlet {
             response.setContentType("text/html;charset=UTF-8");
             //      try {
                 
+            
                 //obtém nome do identificar do recurso (URI)
                 String uri = request.getRequestURI();
                 

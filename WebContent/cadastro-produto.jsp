@@ -236,7 +236,7 @@
                                                                                 
                                         
                                         <div class="form-actions">
-                                          <button type="submit" class="btn btn-primary" name="operacao" formaction="CadastrarProduto" value="SALVAR">Salvar</button>
+                                          <button type="submit" class="btn btn-primary" formaction="CadastrarProduto" name="operacao" value="SALVAR">Salvar</button>
                                           <button type="reset" class="btn">Cancelar</button>
                                         </div>
                                       </fieldset>

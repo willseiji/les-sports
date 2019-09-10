@@ -53,8 +53,15 @@ public class ServletLogin extends HttpServlet {
 		 usuario.setNome(nome);
 		 usuario.setSenha(senha);
 		 
+		 
+		 System.out.println("nome login: "+nome);
+		 System.out.println("nome senha: "+senha);
+		 
 		 UsuarioDAO daoUsuario = new UsuarioDAO();
 		 List<EntidadeDominio> entidades = daoUsuario.pesquisar(usuario);
+		 System.out.println("entidades: "+entidades);
+		 
+		 
 		 Usuario user = (Usuario) entidades.get(0);
 		 
 		 if(entidades!=null) {

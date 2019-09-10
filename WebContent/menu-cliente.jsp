@@ -90,7 +90,7 @@
                             <a href="menu-produto.jsp"><i class="icon-chevron-right"></i> Produto</a>
                         </li>
                         <li class="active">
-                            <a href="menu_pedidos.html"><i class="icon-chevron-right"></i> Pedidos</a>
+                            <a href="menu-pedido.jsp"><i class="icon-chevron-right"></i> Pedidos</a>
                         </li>
                         <li class="active">
                             <a href="menu_trocas.html"><i class="icon-chevron-right"></i> Trocas</a>

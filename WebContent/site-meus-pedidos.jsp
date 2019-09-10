@@ -38,12 +38,12 @@
 						<ul>
 							<li><a href="site_menu_carrinho.html"
 								style="font-size: 15px">Carrinho</a></li>
-							<li><a href="PesquisarPedido/?operacao=PESQUISAR&view=cliente" style="font-size: 15px">Meus
+							<li><a href="site_meus_pedidos.html" style="font-size: 15px">Meus
 									Pedidos</a></li>
 							<li><a href="site_meus_cupons.html" style="font-size: 15px">Meus
 									Cupons</a></li>
 							<li><a
-								href="PreAlterarCliente?operacao=PREALTERAR&view=cliente"
+								href="PreAlterarCliente?txt_NmCodigo=PED00007&operacao=PREALTERAR&view=cliente"
 								style="font-size: 15px">Minha Conta</a></li>
 							<li><a href="login.jsp" style="font-size: 15px">Login</a></li>
 						</ul>
@@ -108,103 +108,69 @@
 
 
 
-		<div class="main">
-			<div class="content">
-				<div class="content_top">
-					<div class="heading">
-						<h3>Produtos à venda</h3>
-					</div>
+		<div class="container-fluid" style="width: 1400px">
+            <div class="row-fluid">
+                <!--/span-->
+                <div class="span9" id="content">
+                      <!-- morris stacked chart -->
+                    <div class="row-fluid">
+                        <!-- block -->
+                        <div class="block">
+                            <div class="navbar navbar-inner block-header">
+                                <div class="muted pull-left">Pedidos</div>
+                            </div>
+                            <div class="block-content collapse in">
+                                <div class="span12">
+                                         
+                                 <fieldset>
+                                    <legend>Meus Pedidos</legend>
+                                        
+  									<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="myTable">
+										<thead>
+											<tr>
+												<th>Cod.Pedido</th>
+												<th>Cliente</th>
+												<th>Data Pedido</th>
+												<th>Valor Total</th>
+												<th>Status</th>
+												<th>Ação</th>
+											</tr>
+										</thead>
+										<c:forEach var="itensPedido" items="${listaPedidos}">
+											<c:if test="${not empty itensPedido}">
+											<tr class="odd gradeX"  onclick="myFunctionName(this)">
+											<td style="display:none" id="id_pedido">${itensPedido[0]}</td>
+                                                <td><a style="text-decoration: underline"><span id="id_codigo">${itensPedido[1]}</span></a></td>
+                                                <td>${itensPedido[2]}</td>
+                                                <td>${itensPedido[3]}</td>
+												<td>${itensPedido[4]}</td>
+												<td>${itensPedido[5]}</td>
+												<input type="hidden" id="myInputPedido" name="txt_IdPedido" value="">
+												<input type="hidden" name="view" value="cliente">
+												<td><button type  ="submit" class="btn btn-warning btn-mini" name="operacao" formaction="PreAlterarPedido" id="bttAlterar"
+												 
+                                    			value="PREALTERAR">Visualizar</button>
+                                                    
+                                                </td>
+											</tr>
+											
+                            			</c:if>
+                            		</c:forEach>
+									</table>
+                                         </fieldset>
+                                         
+                                         
+            
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /block -->
+                    </div>
 
-					<div class="clear"></div>
-				</div>
-					<form name="ListarProdutos" method="post">
-				
-				<c:forEach var="itemProdutos" items="${listaProdutos}" varStatus="loopCount">
-					<c:if test="${not empty itemProdutos}" >
 
-
-						<div class="section group">
-							<div class="grid_1_of_4 images_1_of_4">
-								<a href="preview.html"><img src="images2/feature-pic1.jpg"
-									alt="" /></a>
-								<h2>${itemProdutos[2]}</h2>
-								<p>${itemProdutos[0]}</p>
-								<div class="price-details">
-									<div class="price-number">
-										<p>
-											<span class="rupees">${itemProdutos[6]}</span>
-										</p>
-									</div>
-									<div class="add-cart">
-										<h4>
-											<a href="PreAlterarProduto?operacao=PREALTERAR&txt_IdProduto=<c:out value="${itemProdutos[0]}"/>&view=cliente">Comprar</a>
-										</h4>
-									</div>
-									<div class="clear"></div>
-								</div>
-							</div>
-							<div class="grid_1_of_4 images_1_of_4">
-								<a href="preview.html"><img src="images2/feature-pic1.jpg"
-									alt="" /></a>
-								<h2>${itemProdutos[2]}</h2>
-								<div class="price-details">
-									<div class="price-number">
-										<p>
-											<span class="rupees">${itemProdutos[6]}</span>
-										</p>
-									</div>
-									<div class="add-cart">
-										<h4>
-											<a href="site_carrinho.html">Comprar</a>
-										</h4>
-									</div>
-									<div class="clear"></div>
-								</div>
-							</div>
-							<div class="grid_1_of_4 images_1_of_4">
-								<a href="preview.html"><img src="images2/feature-pic1.jpg"
-									alt="" /></a>
-								<h2>${itemProdutos[2]}</h2>
-								<div class="price-details">
-									<div class="price-number">
-										<p>
-											<span class="rupees">${itemProdutos[6]}</span>
-										</p>
-									</div>
-									<div class="add-cart">
-										<h4>
-											<a href="site_carrinho.html">Comprar</a>
-										</h4>
-									</div>
-									<div class="clear"></div>
-								</div>
-							</div>
-							<div class="grid_1_of_4 images_1_of_4">
-								<a href="preview.html"><img src="images2/feature-pic1.jpg"
-									alt="" /></a>
-								<h2>${itemProdutos[2]}</h2>
-								<div class="price-details">
-									<div class="price-number">
-										<p>
-											<span class="rupees">${itemProdutos[6]}</span>
-										</p>
-									</div>
-									<div class="add-cart">
-										<h4>
-											<a href="site_carrinho.html">Comprar</a>
-										</h4>
-									</div>
-									<div class="clear"></div>
-								</div>
-							</div>
-						</div>
-						
-					</c:if>
-				</c:forEach>
-				</form>
-				
-
-			</div>
+                </div>
+            </div>
+        </div>  
 			<div class="footer">
 				<div class="copy_right">
 					<p>
@@ -212,12 +178,44 @@
 					</p>
 				</div>
 			</div>
-			<script type="text/javascript">
+
+	<script type="text/javascript">
+	    $(document).ready(function () {
+	        $('#horizontalTab').easyResponsiveTabs({
+	            type: 'default', //Types: default, vertical, accordion           
+	            width: 'auto', //auto or any width like 600px
+	            fit: true   // 100% fit in a container
+	        });
+	    });
+   	</script>
+
+	<script type="text/javascript">
 		$(document).ready(function() {			
 			$().UItoTop({ easingType: 'easeOutQuart' });
 			
 		});
 	</script>
+
+	<script>
+        function myFunctionName(x) {
+            var myTable = document.getElementById('myTable');
+            var r = x.rowIndex;
+            var codPedido = myTable.rows[r].cells[0].innerText;
+            document.getElementById("myInputPedido").value = codPedido;
+            
+        }
+    </script>
+    <script>
+        var mensagem = '${msg}';
+        if (mensagem.length !== 0) {
+            alert(mensagem);
+        }
+    </script>
+    
+        
+        
+    
+
 			<a href="#" id="toTop"><span id="toTopHover"> </span></a>
 </body>
 </html>

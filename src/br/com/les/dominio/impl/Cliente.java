@@ -50,10 +50,6 @@ public class Cliente extends EntidadeDominio{
 	@Transient
 	private List<Endereco> enderecos;
 	
-	@OneToOne(mappedBy = "pedido")
-	private Pedido pedido;
-
-	
 	
 	public int getId() {
 		return id;

@@ -137,14 +137,55 @@
     <servlet-name>UsuarioLogout</servlet-name>
     <url-pattern>/UsuarioLogout</url-pattern>
   </servlet-mapping>
-  
-    <servlet>
+  <servlet>
     <servlet-name>AdicionarCarrinho</servlet-name>
     <servlet-class>br.com.les.servlet.ServletCarrinho</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>AdicionarCarrinho</servlet-name>
     <url-pattern>/AdicionarCarrinho</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>SalvarMenuCart</servlet-name>
+    <servlet-class>br.com.les.servlet.ServletMenuCart</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SalvarMenuCart</servlet-name>
+    <url-pattern>/SalvarMenuCart</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>CadastrarPedido</servlet-name>
+    <servlet-class>br.com.les.servlet.Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CadastrarPedido</servlet-name>
+    <url-pattern>/CadastrarPedido</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>PesquisarPedido</servlet-name>
+    <servlet-class>br.com.les.servlet.Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PesquisarPedido</servlet-name>
+    <url-pattern>/PesquisarPedido</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>PreAlterarPedido</servlet-name>
+    <servlet-class>br.com.les.servlet.Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PreAlterarPedido</servlet-name>
+    <url-pattern>/PreAlterarPedido</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>AlterarPedido</servlet-name>
+    <servlet-class>br.com.les.servlet.Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AlterarPedido</servlet-name>
+    <url-pattern>/AlterarPedido</url-pattern>
   </servlet-mapping>
   
   

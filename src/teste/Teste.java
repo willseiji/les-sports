@@ -8,7 +8,7 @@ import javax.persistence.Column;
 
 import br.com.les.dao.impl.ClienteDAO;
 import br.com.les.dao.impl.EnderecoDAO;
-import br.com.les.dao.impl.Produto2DAO;
+import br.com.les.dao.impl.ItemDAO;
 import br.com.les.dominio.impl.Cidade;
 import br.com.les.dominio.impl.Cliente;
 import br.com.les.dominio.impl.Endereco;
@@ -32,7 +32,7 @@ public class Teste{
 		produto.setFabricante("casa da vo");
 		
 		*/
-		
+		/*
 		Cliente cliente = new Cliente();
 		cliente.setNome("Joao");
 		cliente.setDtNasc("02/02/2002");
@@ -71,7 +71,23 @@ public class Teste{
 		
 		EntidadeDominio entidadeSalvar = (EntidadeDominio) cliente;
 		List<EntidadeDominio> entidades = servicoCliente.salvar(entidadeSalvar);
+		*/
 		
+		int id_pedido=7;
+		ItemDAO daoItem = new ItemDAO();
+		List<EntidadeDominio> entidades = daoItem.findByIdPedido(id_pedido);
+		System.out.println(entidades);
+		
+		/*
+		int id = 7;
+		System.out.println("inicio de codigo");
+		String stValorId = String.format("%08d",id);
+		System.out.println("inicio de codigo");
+		//String initCateg = nome.substring(0, 3);
+        //String code = initCateg.toUpperCase()+stValorId;
+		String code = stValorId;
+        System.out.println("codigo gerado: "+code);
+        */
 		
 	}
 

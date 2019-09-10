@@ -5,28 +5,6 @@
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE HTML>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, maximum-scale=1">
-<link href="assets/styles.css" rel="stylesheet" media="screen">
-<link href="css2/style.css" rel="stylesheet" type="text/css" media="all" />
-<link href="css2/slider.css" rel="stylesheet" type="text/css"
-	media="all" />
-<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet"
-	media="screen">
-<link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet"
-	media="screen">
-
-<script type="text/javascript" src="js2/jquery-1.7.2.min.js"></script>
-<script type="text/javascript" src="js2/move-top.js"></script>
-<script type="text/javascript" src="js2/easing.js"></script>
-<script src="js2/easyResponsiveTabs.js" type="text/javascript"></script>
-<script src="vendors/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-
-<script src="vendors/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-</head>
-<!DOCTYPE HTML>
-<head>
 <title>Free Home Shoppe Website Template | Preview :: w3layouts</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -196,13 +174,17 @@
                     <div id="product">
                         <h4>Total do Pedido</h4>
                         <p>Subtotal: R$ <span id="id_subtotal"></span></p>
-                        <p>Frete:    R$ <span id="id_frete"></span>0,00</p>
-                        <p>Desconto: R$ <span id="id_desconto"></span>0,00</p>
+                        <p>Frete:    R$ <span id="id_frete">0.00</span></p>
+                        <p>Desconto: R$ <span id="id_desconto">0.00</span></p>
                         <hr>
                         <p><strong>Total:    <span style="font-size: 20px" id="id_total"></span></strong></p>
+                        <input type="hidden" id="id_valorSubTotal" name="txt_valorSubTotal" value="">
+                        <input type="hidden" id="id_valorFrete" name="txt_valorFrete" value="">
+                        <input type="hidden" id="id_valorDesconto" name="txt_valorDesconto" value="">
+                        <input type="hidden" id="id_valorTotal" name="txt_valorTotal" value="">
                         <div>
                             <p ><button type="button" style="text-align: right" class="btn btn-success btn-large" onclick="calcular_total()"/>Atualizar Total</p></div>
-                        <p><button type="button" class="btn btn-success btn-large" ><a href="site_checkout.html" style="color: white">Finalizar Pedido</a></button>
+                        <p><button type="submit" class="btn btn-success btn-large" formaction ="SalvarMenuCart" style="color: white">Finalizar Pedido</button>
                         </p>
                     </div>
                         
@@ -277,6 +259,10 @@
             var desconto = document.getElementById("id_desconto").innerHTML;
             var total = subtotal-frete-desconto;
             document.getElementById('id_total').innerHTML = total;
+            document.getElementById('id_valorSubTotal').value = subtotal;
+            document.getElementById('id_valorFrete').value = frete;
+            document.getElementById('id_valorDesconto').value = desconto;
+            document.getElementById('id_valorTotal').value = total;
         }
         window.load=calcular_total();
     </script>
