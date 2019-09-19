@@ -30,13 +30,13 @@
 		<div class="header">
 			<div class="header_top">
 				<div class="logo">
-					<a href="site_principal.html"><img src="images2/logo.png"
+					<a href="home.jsp"><img src="images2/logo.png"
 						alt="" /></a>
 				</div>
 				<div class="headertop_desc">
 					<div class="account_desc">
 						<ul>
-							<li><a href="site_menu_carrinho.html"
+							<li><a href="site-menu-carrinho.jsp"
 								style="font-size: 15px">Carrinho</a></li>
 							<li><a href="site_meus_pedidos.html" style="font-size: 15px">Meus
 									Pedidos</a></li>
@@ -121,7 +121,7 @@
 										<div id="products">
 											<div>
 												<a href="#" target="_blank"><img
-													src="images2/productslide-1.jpg" alt=" " /></a>
+													src="/les-codigo/WebContent/images2/productslide-10.jpg" alt=" " /></a>
 											</div>
 
 										</div>

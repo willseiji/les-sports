@@ -5,6 +5,7 @@ public class Estoque extends EntidadeDominio {
 	private int id;
 	private String data;
 	private String codigo;
+	private int qtde;
 	private int volumeMinimo;
 	private int volumeMaximo;
 	private int volume;
@@ -63,6 +64,16 @@ public class Estoque extends EntidadeDominio {
 	}
 	
 	
+	public int getQtde() {
+		return qtde;
+	}
+	public void setQtde(int qtde) {
+		this.qtde = qtde;
+	}
+	public double calculoValorVenda() {
+		double valor =(this.getPrecoCompra()*this.getVolume()*1.5)/	(this.getQtde()*this.getPrecoVenda()); 
+		return valor;
+	}
 	
 
 }

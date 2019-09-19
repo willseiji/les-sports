@@ -105,13 +105,8 @@
 	     </div>	     
 
   <hr>
-  <p>Sessao idCliente</p>
   
-	<%
-	HttpSession session = request.getSession(false);
-	int id = (int) session.getAttribute("idCliente"); 
-	out.println("id: "+id);
-	%>
+  
 	
       
     <div class="container">

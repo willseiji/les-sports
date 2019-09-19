@@ -4,10 +4,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.les.dao.impl.CartaoDAO;
 import br.com.les.dao.impl.ClienteDAO;
 import br.com.les.dao.impl.EnderecoDAO;
 import br.com.les.dao.impl.ProdutoDAO;
 import br.com.les.dao.impl.UsuarioDAO;
+import br.com.les.dominio.impl.CartaoCredito;
 import br.com.les.dominio.impl.Cliente;
 import br.com.les.dominio.impl.Endereco;
 import br.com.les.dominio.impl.EntidadeDominio;
@@ -20,24 +22,29 @@ public class ClienteServico implements IServico {
 	ClienteDAO daoCliente = new ClienteDAO();
 	EnderecoDAO daoEndereco = new EnderecoDAO();
 	UsuarioDAO daoUsuario = new UsuarioDAO();
+	CartaoDAO daoCartao = new CartaoDAO();
 	Cliente cliente;
 	Endereco endereco;
+	CartaoCredito cartao;
 	
 	@Override
 	public List<EntidadeDominio> salvar(EntidadeDominio entidade) throws SQLException {
 		
-		Cliente cliente = (Cliente) entidade;
-		EntidadeDominio entidadeDTO = new EntidadeDominio();
 		
-		entidadeDTO = daoCliente.salvar(entidade);
-		Cliente clienteSalvo = (Cliente) entidadeDTO;
+		
+		Cliente cliente = (Cliente) entidade;
+		
+		Usuario usuario = cliente.getUsuario();
+		EntidadeDominio entidadeUsuarioDTO = daoUsuario.salvar(usuario);
+		Usuario usuarioDTO = (Usuario) entidadeUsuarioDTO;
+		
+		cliente.setId_usuario(usuario.getId());
+		EntidadeDominio entidadeClienteDTO = daoCliente.salvar(cliente);
+		Cliente clienteSalvo = (Cliente) entidadeClienteDTO;
 		
 		String codigo = geradorCodigo(clienteSalvo.getNome(), clienteSalvo.getId());
-		
 		clienteSalvo.setCodigo(codigo);
-		entidade = (EntidadeDominio) clienteSalvo;
-		
-		daoCliente.alterar(entidade);
+		daoCliente.alterar(clienteSalvo);
 		
 		int id_cliente = clienteSalvo.getId();
 		
@@ -96,6 +103,9 @@ public class ClienteServico implements IServico {
 		List<EntidadeDominio> entidadesEnderecos = daoEndereco.findByIdCliente(id_cliente);
 		System.out.println("entidadesEnderecos: "+entidadesEnderecos);
 		
+		List<EntidadeDominio> entidadesCartoes = daoCartao.findByIdCliente(id_cliente);
+		System.out.println("entidadesCartoes: "+entidadesCartoes);
+		
 		List<EntidadeDominio> entidadesDTO = new ArrayList<>();
 		List<Endereco> enderecosDTO = new ArrayList<>();
 		Endereco enderecoDTO = new Endereco();
@@ -103,10 +113,20 @@ public class ClienteServico implements IServico {
 			enderecoDTO = (Endereco) entidadesEnderecos.get(j);
 			System.out.println("enderecoDTO: "+enderecoDTO);
 			enderecosDTO.add(enderecoDTO);
-			
 		}
-		System.out.println("enderecos: "+enderecosDTO);
 		clienteDTO.setEnderecos(enderecosDTO);
+		
+		List<CartaoCredito> cartoesDTO = new ArrayList<>();
+		CartaoCredito cartaoDTO = new CartaoCredito();
+		for(int j=0;j<entidadesCartoes.size();j++) {
+			cartaoDTO = (CartaoCredito) entidadesCartoes.get(j);
+			System.out.println("cartaoDTO: "+cartaoDTO);
+			cartoesDTO.add(cartaoDTO);
+		}
+		System.out.println("cartoes: "+cartoesDTO);
+		clienteDTO.setCartoes(cartoesDTO);
+		
+		
 		EntidadeDominio entidadeDTO = (EntidadeDominio) clienteDTO;
 		entidadesDTO.add(entidadeDTO);
 		return entidadesDTO;

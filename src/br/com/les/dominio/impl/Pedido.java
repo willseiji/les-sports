@@ -25,7 +25,7 @@ public class Pedido extends EntidadeDominio {
 	@Column(name="id_pedido")
 	int id;
 	
-	@Transient
+	@Column
 	private String data;
 	@Transient
 	private String filtro;
@@ -38,6 +38,9 @@ public class Pedido extends EntidadeDominio {
 	
 	@Transient
 	private Frete frete;
+	
+	@Transient
+	private Pagamento pagamento;
 	
 	@Column(name="codigoPedido")
 	private String codigo;
@@ -77,8 +80,12 @@ public class Pedido extends EntidadeDominio {
 	}
 	
 	
-	
-	
+	public Pagamento getPagamento() {
+		return pagamento;
+	}
+	public void setPagamento(Pagamento pagamento) {
+		this.pagamento = pagamento;
+	}
 	public String getCodigo() {
 		return codigo;
 	}

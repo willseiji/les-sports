@@ -20,6 +20,7 @@ public class ProdutoServico implements IServico {
 	public List<EntidadeDominio> salvar(EntidadeDominio entidade) throws SQLException {
 		// TODO Auto-generated method stub
 		Produto produto = (Produto) dao.salvar(entidade);
+		produto.setData(produto.getData_super());
 		
 		String codigo = geradorCodigo(produto.getCategoria(), produto.getId());
 		

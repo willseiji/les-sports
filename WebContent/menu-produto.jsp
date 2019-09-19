@@ -126,6 +126,7 @@
 		                            <input type="text" class="form-control" name="txt_filtro" id="txt_filtro" 
 		                                   placeholder="" value="">
 		                            <span class="input-group-btn">
+		                            <input type="hidden" name="view" value="adm">
 		                                <button type="submit" class="btn btn-primary" 
 		                                        formaction="PesquisarProduto" name="operacao" value="PESQUISAR">
 		                                    Pesquisar

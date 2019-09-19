@@ -36,23 +36,24 @@ public class ClienteDAO implements IDAO {
 
 		return instance;
 	}
-
+/*
 	public ClienteDAO() {
 		em = getEntityManager();
 	}
-
+*/
 	private EntityManager getEntityManager() {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("les");
 
-		if (em == null) {
+		//if (em == null) {
 			em = emf.createEntityManager();
-		}
+	//	}
 
 		return em;
 	}
 	
 	@Override
 	public EntidadeDominio salvar(EntidadeDominio entidade) {
+		em = getEntityManager();
 		Cliente cliente = (Cliente) entidade;
 		System.out.println("antes de try");
 		try {
@@ -71,6 +72,7 @@ public class ClienteDAO implements IDAO {
 			em.getTransaction().rollback();
 		}
 		System.out.println("cliente: "+cliente);
+		em.close();
 		
 		return cliente;
 
@@ -81,7 +83,7 @@ public class ClienteDAO implements IDAO {
 	@SuppressWarnings("unchecked")
 	public List<EntidadeDominio> pesquisar(EntidadeDominio entidade) {
 
-
+		em = getEntityManager();
 		Cliente c = (Cliente) entidade;
 		String filtro = c.getNome();
 
@@ -97,17 +99,22 @@ public class ClienteDAO implements IDAO {
 			query.setParameter("paramNome", "%"+filtro+"%");
 
 		List<EntidadeDominio> entidades = query.getResultList();
+		em.close();
 		return entidades;
 
 	}
 
 	@Override
 	public EntidadeDominio prealterar(int id) {
-		return em.find(Cliente.class, id);
+		em = getEntityManager();
+		em = getEntityManager();
+		Cliente cliente = em.find(Cliente.class, id);
+		return cliente;
 	}
 
 	@Override
 	public void alterar(EntidadeDominio entidade) {
+		em = getEntityManager();
 		Cliente cliente = (Cliente) entidade;
 		System.out.println("------------------------");
 		try {
@@ -118,16 +125,22 @@ public class ClienteDAO implements IDAO {
 			ex.printStackTrace();
 			em.getTransaction().rollback();
 		}
-
+		em.close();
 	}
 
 	@Override
 	public void excluir(EntidadeDominio entidade) {
+		em = getEntityManager();
 		// TODO Auto-generated method stub
-
+		em.close();
 	}
 	
 	public EntidadeDominio findUsuario(int id_usuario) {
-		return em.find(Cliente.class, id_usuario);
+		em = getEntityManager();
+		String sql = "FROM " + Cliente.class.getName()+ " WHERE id_usuario = "+id_usuario; 
+
+		Query query = em.createQuery(sql);
+		return (EntidadeDominio) query.getSingleResult();
+
 	}
 }

@@ -93,10 +93,10 @@
                             <a href="menu-pedido.jsp"><i class="icon-chevron-right"></i> Pedidos</a>
                         </li>
                         <li class="active">
-                            <a href="menu_trocas.html"><i class="icon-chevron-right"></i> Trocas</a>
+                            <a href="menu-trocas.jsp"><i class="icon-chevron-right"></i> Trocas</a>
                         </li>
                         <li class="active">
-                            <a href="menu_estoque.html"><i class="icon-chevron-right"></i> Estoque</a>
+                            <a href="menu-estoque.jsp"><i class="icon-chevron-right"></i> Estoque</a>
                         </li>
                         <li class="active">
                             <a href="menu_grafico.html"><i class="icon-chevron-right"></i> Gráficos</a>

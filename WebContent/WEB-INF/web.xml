@@ -145,7 +145,6 @@
     <servlet-name>AdicionarCarrinho</servlet-name>
     <url-pattern>/AdicionarCarrinho</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>SalvarMenuCart</servlet-name>
     <servlet-class>br.com.les.servlet.ServletMenuCart</servlet-class>
@@ -154,7 +153,6 @@
     <servlet-name>SalvarMenuCart</servlet-name>
     <url-pattern>/SalvarMenuCart</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>CadastrarPedido</servlet-name>
     <servlet-class>br.com.les.servlet.Servlet</servlet-class>
@@ -187,7 +185,103 @@
     <servlet-name>AlterarPedido</servlet-name>
     <url-pattern>/AlterarPedido</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>MeusPedidos</servlet-name>
+    <servlet-class>br.com.les.servlet.ServletMeusPedidos</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MeusPedidos</servlet-name>
+    <url-pattern>/MeusPedidos</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>MeusCupons</servlet-name>
+    <servlet-class>br.com.les.servlet.ServletMeusCupons</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MeusCupons</servlet-name>
+    <url-pattern>/MeusCupons</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>CadastrarCartao</servlet-name>
+    <servlet-class>br.com.les.servlet.Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CadastrarCartao</servlet-name>
+    <url-pattern>/CadastrarCartao</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>CadastrarTroca</servlet-name>
+    <servlet-class>br.com.les.servlet.Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CadastrarTroca</servlet-name>
+    <url-pattern>/CadastrarTroca</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>PesquisarTroca</servlet-name>
+    <servlet-class>br.com.les.servlet.Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PesquisarTroca</servlet-name>
+    <url-pattern>/PesquisarTroca</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>PreAlterarTroca</servlet-name>
+    <servlet-class>br.com.les.servlet.Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PreAlterarTroca</servlet-name>
+    <url-pattern>/PreAlterarTroca</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>AlterarTroca</servlet-name>
+    <servlet-class>br.com.les.servlet.Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AlterarTroca</servlet-name>
+    <url-pattern>/AlterarTroca</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>CadastrarCupom</servlet-name>
+    <servlet-class>br.com.les.servlet.Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CadastrarCupom</servlet-name>
+    <url-pattern>/CadastrarCupom</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>PesquisarCupom</servlet-name>
+    <servlet-class>br.com.les.servlet.Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PesquisarCupom</servlet-name>
+    <url-pattern>/PesquisarCupom</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>PreAlterarCupom</servlet-name>
+    <servlet-class>br.com.les.servlet.Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PreAlterarCupom</servlet-name>
+    <url-pattern>/PreAlterarCupom</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>AlterarCupom</servlet-name>
+    <servlet-class>br.com.les.servlet.Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AlterarCupom</servlet-name>
+    <url-pattern>/AlterarCupom</url-pattern>
+  </servlet-mapping>
   
+  <servlet>
+    <servlet-name>ServletDesconto</servlet-name>
+    <servlet-class>br.com.les.servlet.ServletDesconto</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ServletDesconto</servlet-name>
+    <url-pattern>/ServletDesconto</url-pattern>
+  </servlet-mapping>
   
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>

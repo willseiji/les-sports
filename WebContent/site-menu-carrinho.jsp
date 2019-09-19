@@ -19,7 +19,7 @@
 <script type="text/javascript" src="js2/easing.js"></script>
 <script src="js2/easyResponsiveTabs.js" type="text/javascript"></script>
 <script src="vendors/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-    
+
     
     
 <link href="css2/easy-responsive-tabs.css" rel="stylesheet" type="text/css" media="all"/>
@@ -31,12 +31,13 @@
 	<div class="header">
         <div class="header_top">
 			<div class="logo">
-				<a href="site_principal.html"><img src="images2/logo.png" alt="" /></a>
+				<a href="home.jsp"><img src="images2/logo.png" alt="" /></a>
 			</div>
             <div class="headertop_desc">
 			<div class="account_desc">
 				<ul>
-                    <li><a href="site_menu_carrinho.html" style="font-size: 15px">Carrinho</a></li>
+                    <li><a href="site-menu-carrinho.jsp"
+								style="font-size: 15px">Carrinho</a></li>
 					<li><a href="site_meus_pedidos.html" style="font-size: 15px">Meus Pedidos</a></li>
                     <li><a href="site_meus_cupons.html" style="font-size: 15px">Meus Cupons</a></li>
 					<li><a href="login.html" style="font-size: 15px">Minha Conta</a></li>
@@ -127,7 +128,7 @@
 												<th>Qtde</th>
 												<th>Preço Unit (R$)</th>
 												<th>Subtotal (R$)</th>
-                                                <th>Ação</th>
+                                                <th style="width:50px">Ação</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -140,7 +141,7 @@
 												<td class="center"><input id="qtde1" type="number" style=" width: 40px" value="${itemCarrinho[1]}" min="1" /></td>
 												<td class="center">${itemCarrinho[6]}</td>
                                                 <td class="center"></td>
-                                                <td class="center"><input type="button" class="btn btn-danger" value="Excluir" onclick="deleteRow(this)"><i class="icon-remove icon-white"></i></td>
+                                                <td class="center"><input type=button" class="btn btn-danger" value="Excluir" onclick="deleteRow(this)"><i class="icon-remove icon-white"></i></td>
 											</tr>
 											
 											</c:if>
@@ -162,20 +163,23 @@
                     <div id="product">
                         <h4>Calcular Frete</h4>
                         <p>informe seu CEP</p>
-                        <p><input></p>
-                        <p><button class="btn">Calcular Frete</button></p>
+                        <p><input id="codigo_frete"></p>
+                        <p><input type="button" class="btn" onclick="calcular_frete()" value="Calcular Frete"></p>
+                        <p>Valor do Frete: R$ <span id="valor_frete"></span></p>
                     </div>
                     <div id="product">
                         <h4>Cupom de Desconto</h4>
                         <p>informe seu cupom de desconto</p>
-                        <p><input></p>
-                        <p><button class="btn">Usar Cupom</button></p>
+                        <p><input id="codigo_cupom"></p>
+                        <p><input type="button" class="btn" value="Usar Cupom" id="buscar_cupom"  ></p>
+                        <p>Valor do Cupom: R$ <span id="valor_desconto" value="0"></span></p>
+                        <p>Status: R$ <span id="valor_status" value=""></span></p>
                     </div>
                     <div id="product">
                         <h4>Total do Pedido</h4>
-                        <p>Subtotal: R$ <span id="id_subtotal"></span></p>
-                        <p>Frete:    R$ <span id="id_frete">0.00</span></p>
-                        <p>Desconto: R$ <span id="id_desconto">0.00</span></p>
+                        <p>Subtotal:  R$ <span id="id_subtotal"></span></p>
+                        <p>Frete:     R$ <span id="id_frete">0</span></p>
+                        <p>Desconto: -R$ <span id="id_desconto">0</span></p>
                         <hr>
                         <p><strong>Total:    <span style="font-size: 20px" id="id_total"></span></strong></p>
                         <input type="hidden" id="id_valorSubTotal" name="txt_valorSubTotal" value="">
@@ -254,10 +258,11 @@
     
     <script>
         function calcular_total() {
-            var subtotal = document.getElementById("id_subtotal").innerHTML;
-            var frete = document.getElementById("id_frete").innerHTML;
-            var desconto = document.getElementById("id_desconto").innerHTML;
-            var total = subtotal-frete-desconto;
+            var subtotal = parseFloat(document.getElementById("id_subtotal").innerHTML);
+            var frete = parseFloat(document.getElementById("id_frete").innerHTML);
+            var desconto = parseFloat(document.getElementById("id_desconto").innerHTML);
+            var total = subtotal+frete-desconto;
+            
             document.getElementById('id_total').innerHTML = total;
             document.getElementById('id_valorSubTotal').value = subtotal;
             document.getElementById('id_valorFrete').value = frete;
@@ -283,6 +288,85 @@
             document.getElementById("myTable").deleteRow(i);
         }
     </script>
+    
+    <script type="text/javascript">
+		$(document).ready(function() {			
+			$('#buscar_cupom').click(function(event){
+/*				$.ajax({
+						url:'./ServletDesconto',
+						data:{
+								cod_cupom: $('#codigo_cupom').val()
+							},
+						//contentType:'application/json',
+						//dataType:'json',
+						type:'POST',
+						sucess:function(data){
+							var valorCupom=data;
+							var statusCupom="sucesso";
+							//console.log("sucesso");
+							//var dadosCupom=JSON.parse(cupom);
+							//var valorCupom = dadosCupom.valor;
+							//var statusCupom = dadosCupom.condicao;
+							alert("sucesso");
+							alert("cupom");
+							document.GetElementById("valor_desconto").value = valorCupom;
+							document.GetElementById("valor_status").value = statusCupom;
+							
+						},
+						error: function(){
+							console.log("fracasso");
+							alert("erro no ajax");
+						}
+				});
+			});
+		});
+				*/
+				
+				var codigo = $('#codigo_cupom').val();
+				//var desconto_acumulado = $('#id_desconto').innerHTML;
+				//var desconto_acumulado = $('#id_desconto').val();
+				$.post('ServletDesconto',{
+					cod_cupom:codigo
+				},function(cupom){
+					
+					$('#valor_desconto').text(cupom);
+					$('#id_desconto').text(cupom);
+					
+					//var desconto= parseDouble(cupom);
+					//var desconto_acumulado = parseFloat(document.getElementById('id_desconto').innerHTML);
+					//var desconto_final = valor_desconto+desconto_acumulado
+					
+		            //document.getElementById('id_desconto').innerHTML = "33";
+					
+					
+					//$('#valor_status').text(cupom);
+					 
+					//var desconto_total = parseFloat(responseText)+13;
+
+				//	$('#valor_desconto').text("valor");
+					//$('#id_desconto').text(desconto_total.toString());
+				
+				});
+			});
+		});
+			
+	</script>
+    
+    <script>
+        function calcular_frete() {
+            var cupom = document.getElementById("codigo_frete").value;
+            if(cupom==null||cupom=="")
+            	var valor_frete=0;
+            else
+            	var valor_frete=10;
+            
+            document.getElementById('valor_frete').innerHTML = valor_frete;
+            document.getElementById('id_frete').innerHTML = valor_frete;
+
+        }
+    </script>
+    
+    
     
     <a href="#" id="toTop"><span id="toTopHover"> </span></a>
 </body>

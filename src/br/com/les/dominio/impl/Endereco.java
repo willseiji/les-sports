@@ -23,8 +23,6 @@ public class Endereco extends EntidadeDominio{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_endereco")
 	private int id;
-	@Transient
-	private String data;
 	@Column(name="rua")
 	private String rua;
 	@Column(name="numero")
@@ -37,6 +35,8 @@ public class Endereco extends EntidadeDominio{
 	private String cep;
 	@Column(name="tipo_endereco")
 	private String tipoEndereco;
+	@Column(name="principal")
+	private String principal;
 	@Embedded
 	private Cidade cidade;
 	@Column(name="id_cliente")
@@ -50,12 +50,6 @@ public class Endereco extends EntidadeDominio{
 	}
 	public void setId(int id) {
 		this.id = id;
-	}
-	public String getData() {
-		return data;
-	}
-	public void setData(String data) {
-		this.data = data;
 	}
 	public String getRua() {
 		return rua;
@@ -112,6 +106,12 @@ public class Endereco extends EntidadeDominio{
 	}
 	public void setId_cliente(int id_cliente) {
 		this.id_cliente = id_cliente;
+	}
+	public String getPrincipal() {
+		return principal;
+	}
+	public void setPrincipal(String principal) {
+		this.principal = principal;
 	}
 	
 	

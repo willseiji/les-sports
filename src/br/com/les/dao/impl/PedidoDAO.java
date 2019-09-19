@@ -29,23 +29,23 @@ public class PedidoDAO implements IDAO {
 
 		return instance;
 	}
-
+/*
 	public PedidoDAO() {
 		em = getEntityManager();
 	}
-
+*/
 	private EntityManager getEntityManager() {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("les");
-
-		if (em == null) {
+//		if (em == null) {
 			em = emf.createEntityManager();
-		}
+//		}
 
 		return em;
 	}
 	
 	@Override
 	public EntidadeDominio salvar(EntidadeDominio entidade) {
+		em = getEntityManager();
 		Pedido pedido = (Pedido) entidade;
 		try {
 			em.getTransaction().begin();
@@ -56,7 +56,7 @@ public class PedidoDAO implements IDAO {
 			ex.printStackTrace();
 			em.getTransaction().rollback();
 		}
-		
+		em.close();
 		System.out.println("ID: "+pedido.getId());
 		return pedido;
 
@@ -66,7 +66,7 @@ public class PedidoDAO implements IDAO {
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<EntidadeDominio> pesquisar(EntidadeDominio entidade) {
-
+		em = getEntityManager();
 
 		Pedido pedido = (Pedido) entidade;
 		String filtro = pedido.getFiltro();
@@ -86,7 +86,7 @@ public class PedidoDAO implements IDAO {
 		}
 
 		List<EntidadeDominio> entidades = query.getResultList();
-		
+		em.close();		
 		
 		return entidades;
 
@@ -94,11 +94,15 @@ public class PedidoDAO implements IDAO {
 
 	@Override
 	public EntidadeDominio prealterar(int id) {
-		return em.find(Pedido.class, id);
+		em = getEntityManager();
+		Pedido pedido = em.find(Pedido.class, id);
+		em.close();
+		return pedido;
 	}
 
 	@Override
 	public void alterar(EntidadeDominio entidade) {
+		em = getEntityManager();
 		Pedido pedido = (Pedido) entidade;
 		
 		System.out.println("------------------------");
@@ -110,28 +114,33 @@ public class PedidoDAO implements IDAO {
 			ex.printStackTrace();
 			em.getTransaction().rollback();
 		}
-
+		em.close();
 	}
 
 	@Override
 	public void excluir(EntidadeDominio entidade) {
+		em = getEntityManager();
 		// TODO Auto-generated method stub
-
+		em.close();
 	}
 	
 	public EntidadeDominio findPedido(int id_cliente) {
-		return em.find(Pedido.class, id_cliente);
+		em = getEntityManager();
+		Pedido pedido =  em.find(Pedido.class, id_cliente);
+		em.close();
+		return pedido;
 	}
 	
 	public List<EntidadeDominio> findListByIdCliente(int id_cliente) {
-		
+		em = getEntityManager();
 		String sql = "FROM " + Pedido.class.getName(); 
 		sql =sql + " WHERE id_cliente = :paramNome"	;
 		Query query = em.createQuery(sql);
 		query.setParameter("paramNome", id_cliente);
-		List<EntidadeDominio> entidades = query.getResultList();
-		return entidades;
-	}
+		return query.getResultList();
 		
+	}
+	
+	
 
 }

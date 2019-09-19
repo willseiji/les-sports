@@ -45,17 +45,13 @@
 					</ul>
 					<ul class="nav">
 						<li class="active"><a href="#">Dashboard</a></li>
-						<li class="dropdown"><a href="site_principal.html"
-							target="_blank">Site</a></li>
+						<li class="dropdown"><a href="home.jsp"	target="_blank">Site</a></li>
 						<li class="dropdown"><a href="#" data-toggle="dropdown"
 							class="dropdown-toggle">Configurações <b class="caret"></b>
-
 						</a></li>
-
 						<li class="dropdown"><a href="#" role="button"
 							class="dropdown-toggle" data-toggle="dropdown">Usuários <i
 								class="caret"></i>
-
 						</a>
 							<ul class="dropdown-menu">
 								<li><a tabindex="-1" href="#">User List</a></li>
@@ -74,7 +70,7 @@
 			<div class="span3" id="sidebar">
 				<ul class="nav nav-list bs-docs-sidenav nav-collapse collapse">
 
-					<li class="active">
+						<li class="active">
                             <a href="menu-cliente.jsp"><i class="icon-chevron-right"></i> Cliente</a>
                         </li>
                         <li class="active">
@@ -84,10 +80,10 @@
                             <a href="menu-pedido.jsp"><i class="icon-chevron-right"></i> Pedidos</a>
                         </li>
                         <li class="active">
-                            <a href="menu_trocas.html"><i class="icon-chevron-right"></i> Trocas</a>
+                            <a href="menu-trocas.jsp"><i class="icon-chevron-right"></i> Trocas</a>
                         </li>
                         <li class="active">
-                            <a href="menu_estoque.html"><i class="icon-chevron-right"></i> Estoque</a>
+                            <a href="menu-estoque.jsp"><i class="icon-chevron-right"></i> Estoque</a>
                         </li>
                         <li class="active">
                             <a href="menu_grafico.html"><i class="icon-chevron-right"></i> Gráficos</a>
@@ -218,8 +214,7 @@
 
 	<script src="vendors/wizard/jquery.bootstrap.wizard.min.js"></script>
 
-	<script type="text/javascript"
-		src="vendors/jquery-validation/dist/jquery.validate.min.js"></script>
+	<script src="vendors/jquery-validation/dist/jquery.validate.min.js"></script>
 	<script src="assets/form-validation.js"></script>
 
 	<script src="assets/scripts.js"></script>

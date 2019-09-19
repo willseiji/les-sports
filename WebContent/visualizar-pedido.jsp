@@ -45,9 +45,7 @@
                             <li class="active">
                                 <a href="#">Dashboard</a>
                             </li>
-                            <li class="dropdown">
-                                <a href="site_principal.html" target="_blank">Site</a>
-                            </li>
+                            <li class="dropdown"><a href="home.jsp"	target="_blank">Site</a></li>
                             <li class="dropdown">
                                 <a href="#" data-toggle="dropdown" class="dropdown-toggle">Configurações <b class="caret"></b>
 
@@ -84,19 +82,19 @@
                     <ul class="nav nav-list bs-docs-sidenav nav-collapse collapse">
                         
                         <li class="active">
-                            <a href="menu_cliente.jsp"><i class="icon-chevron-right"></i> Cliente</a>
+                            <a href="menu-cliente.jsp"><i class="icon-chevron-right"></i> Cliente</a>
                         </li>
                         <li class="active">
-                            <a href="menu_produto.jsp"><i class="icon-chevron-right"></i> Produto</a>
+                            <a href="menu-produto.jsp"><i class="icon-chevron-right"></i> Produto</a>
                         </li>
                         <li class="active">
-                            <a href="menu_pedido.jsp"><i class="icon-chevron-right"></i> Pedidos</a>
+                            <a href="menu-pedido.jsp"><i class="icon-chevron-right"></i> Pedidos</a>
                         </li>
                         <li class="active">
-                            <a href="menu_trocas.html"><i class="icon-chevron-right"></i> Trocas</a>
+                            <a href="menu-trocas.jsp"><i class="icon-chevron-right"></i> Trocas</a>
                         </li>
                         <li class="active">
-                            <a href="menu_estoque.html"><i class="icon-chevron-right"></i> Estoque</a>
+                            <a href="menu-estoque.jsp"><i class="icon-chevron-right"></i> Estoque</a>
                         </li>
                         <li class="active">
                             <a href="menu_grafico.html"><i class="icon-chevron-right"></i> Gráficos</a>
@@ -154,7 +152,7 @@
 													<br>
 													<input type="hidden" id="txt_id" name="txt_id" value="${itensPedido[0]}">
 													<input type="hidden" id="status_input" name="txt_Status" value="">
-													<button type="submit" formaction="PreAlterarPedido"  name="operacao"
+													<button type="submit" formaction="AlterarPedido"  name="operacao"
 																				value="ALTERAR" onclick="atualizar_status()">Atualizar</button></td>
 												</div>
 											</div>
@@ -189,7 +187,7 @@
 													<td class="center">R$ ${itensItem[9]}</td>
 													<td class="center">Não</td>
 												</tr>
-																								</c:if>
+											</c:if>
 					    	                </c:forEach>
 
 											</tbody>

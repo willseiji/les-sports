@@ -46,6 +46,7 @@
 								href="PreAlterarCliente?txt_NmCodigo=PED00007&operacao=PREALTERAR&view=cliente"
 								style="font-size: 15px">Minha Conta</a></li>
 							<li><a href="login.jsp" style="font-size: 15px">Login</a></li>
+							<li><a href="menu-trocas.jsp" style="font-size: 10px">ADM</a></li>
 						</ul>
 					</div>
 					<div class="clear"></div>
@@ -124,8 +125,8 @@
                                          
                                  <fieldset>
                                     <legend>Meus Pedidos</legend>
-                                        
-  									<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="myTable">
+                                     <form name="meusPedidosForm" method="post">
+  									<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" style="width:650px" id="myTable">
 										<thead>
 											<tr>
 												<th>Cod.Pedido</th>
@@ -148,7 +149,6 @@
 												<input type="hidden" id="myInputPedido" name="txt_IdPedido" value="">
 												<input type="hidden" name="view" value="cliente">
 												<td><button type  ="submit" class="btn btn-warning btn-mini" name="operacao" formaction="PreAlterarPedido" id="bttAlterar"
-												 
                                     			value="PREALTERAR">Visualizar</button>
                                                     
                                                 </td>
@@ -157,7 +157,8 @@
                             			</c:if>
                             		</c:forEach>
 									</table>
-                                         </fieldset>
+									</form>
+                                 </fieldset>
                                          
                                          
             

@@ -22,7 +22,7 @@ public class Produto extends EntidadeDominio {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_produto")
 	private int id;
-	@Transient
+	@Column
 	private String data;
 	@Column(name="codigo")
 	private String codigoProd;
@@ -53,9 +53,6 @@ public class Produto extends EntidadeDominio {
 	@Transient
 	private List<Estoque> itensEstoque = new ArrayList<Estoque>();
 
-	@OneToOne(mappedBy = "produto")
-	private Item item;
-	
 	
 	public int getId() {
 		return id;

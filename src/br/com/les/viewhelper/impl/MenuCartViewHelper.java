@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import br.com.les.aplicacao.Resultado;
 import br.com.les.dao.impl.ProdutoDAO;
 import br.com.les.dominio.impl.Carrinho;
+import br.com.les.dominio.impl.CartaoCredito;
 import br.com.les.dominio.impl.Cliente;
 import br.com.les.dominio.impl.Endereco;
 import br.com.les.dominio.impl.EntidadeDominio;
@@ -73,8 +74,10 @@ public class MenuCartViewHelper implements IViewHelper {
 		List<String> itensEndereco = new ArrayList<>(); ;
 		List<String> itensItens = new ArrayList<>(); ;
 		List<String> itensValor = new ArrayList<>(); ;
+		List<String> itensCartao = new ArrayList<>(); ;
 		List<List<String>> listaEnderecos = new java.util.ArrayList<List<String>>();
 		List<List<String>> listaItens = new java.util.ArrayList<List<String>>();
+		List<List<String>> listaCartoes = new java.util.ArrayList<List<String>>();
 		
 		System.out.println("==================================");
 		System.out.println("=====SET VIEW =============");
@@ -111,8 +114,16 @@ public class MenuCartViewHelper implements IViewHelper {
             itensEndereco.add(endereco.getCidade().getNome());
             itensEndereco.add(endereco.getCidade().getEstado().getNome());
             itensEndereco.add(endereco.getTipoEndereco());
+            itensEndereco.add(endereco.getPrincipal());
             
             listaEnderecos.add(itensEndereco);
+            System.out.println("Endereco Principal?: "+endereco.getPrincipal());
+            
+            
+            if("SIM".equals(endereco.getPrincipal())) {
+            	session.setAttribute("itensEndereco",itensEndereco);
+            }
+            
         }//for
 
 		System.out.println("----------ENDERECOS-------------");
@@ -122,6 +133,31 @@ public class MenuCartViewHelper implements IViewHelper {
 				System.out.println(j + " : "+listaEnderecos.get(i).get(j));
 			}
 		}
+		
+		//----------------------CARTOES---------------------
+		for (int i = 0; i < cliente.getCartoes().size(); i++) {
+			CartaoCredito cartao = cliente.getCartoes().get(i);
+				
+        	itensCartao = new java.util.ArrayList<String>();
+        	itensCartao.add(Integer.toString(cartao.getId()));
+        	itensCartao.add(cartao.getBandeira());
+        	itensCartao.add(cartao.getNumero());
+        	itensCartao.add(cartao.getCodigoSeguranca());
+        	itensCartao.add(cartao.getDataValidade());
+        	itensCartao.add(cartao.getNomeTitular());
+        	
+            listaCartoes.add(itensCartao);
+        }//for
+		
+		System.out.println("----------CARTOES-------------");
+		for(int i=0;i<listaCartoes.size();i++) {
+			System.out.println("cartao: "+i);
+			for(int j=0;j<listaCartoes.get(i).size();j++) {
+				System.out.println(j + " : "+listaCartoes.get(i).get(j));
+			}
+		}
+
+        
 		
 		//---------------------ITENS--------------------
 		List<Item> itens = pedido.getItens();
@@ -146,6 +182,7 @@ public class MenuCartViewHelper implements IViewHelper {
             itensItens.add(Integer.toString(produto.getQuantidade()));
             itensItens.add(produto.getCategoria());
             itensItens.add(produto.getStatus());
+            itensItens.add(Integer.toString(produto.getId()));
             
             listaItens.add(itensItens);
         }//for
@@ -176,7 +213,9 @@ public class MenuCartViewHelper implements IViewHelper {
 		
 		
 		session.setAttribute("itensCliente",itensCliente);
+		
 		session.setAttribute("listaEnderecos",listaEnderecos);
+		session.setAttribute("listaCartoes",listaCartoes);
 		session.setAttribute("listaItens",listaItens);
 		session.setAttribute("itensValor",itensValor);
 		

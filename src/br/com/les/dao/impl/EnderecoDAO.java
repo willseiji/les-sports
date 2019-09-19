@@ -24,23 +24,24 @@ public class EnderecoDAO implements IDAO {
 
 		return instance;
 	}
-
+/*
 	public EnderecoDAO() {
 		em = getEntityManager();
 	}
-
+*/
 	private EntityManager getEntityManager() {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("les");
 
-		if (em == null) {
+//		if (em == null) {
 			em = emf.createEntityManager();
-		}
+//		}
 
 		return em;
 	}
 
 	@Override
 	public EntidadeDominio salvar(EntidadeDominio entidade) {
+		em = getEntityManager();
 		Endereco endereco = (Endereco) entidade;
 		
 		System.out.println("rua: "+endereco.getRua());
@@ -69,7 +70,7 @@ public class EnderecoDAO implements IDAO {
 			em.getTransaction().rollback();
 		}
 		System.out.println("endereco: "+endereco);
-
+		em.close();
 		return endereco;
 
 
@@ -78,7 +79,7 @@ public class EnderecoDAO implements IDAO {
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<EntidadeDominio> pesquisar(EntidadeDominio entidade) {
-
+		em = getEntityManager();
 		Endereco e = (Endereco) entidade;
 		String filtro = e.getRua();
 
@@ -94,17 +95,21 @@ public class EnderecoDAO implements IDAO {
 			query.setParameter("paramNome", "%"+filtro+"%");
 
 		List<EntidadeDominio> entidades = query.getResultList();
+		em.close();
 		return entidades;
 
 	}
 
 	@Override
 	public EntidadeDominio prealterar(int id) {
+		em = getEntityManager();
 		return em.find(Endereco.class, id);
 	}
 
 	@Override
 	public void alterar(EntidadeDominio entidade) {
+		em = getEntityManager();
+		em = getEntityManager();
 		Endereco endereco = (Endereco) entidade;
 
 		try {
@@ -115,24 +120,26 @@ public class EnderecoDAO implements IDAO {
 			ex.printStackTrace();
 			em.getTransaction().rollback();
 		}
-
+		em.close();
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<EntidadeDominio> findByIdCliente(int id_cliente) {
-		
+		em = getEntityManager();
 		String sql = "FROM " + Endereco.class.getName(); 
 		sql =sql + " WHERE id_cliente = :paramNome"	;
 		Query query = em.createQuery(sql);
 		query.setParameter("paramNome", id_cliente);
 		List<EntidadeDominio> entidades = query.getResultList();
+		em.close();
 		return entidades;
 	}
 	
 	@Override
 	public void excluir(EntidadeDominio entidade) {
+		em = getEntityManager();
 		// TODO Auto-generated method stub
-
+		em.close();
 	}
 
 }

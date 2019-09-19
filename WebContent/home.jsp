@@ -30,17 +30,17 @@
 		<div class="header">
 			<div class="header_top">
 				<div class="logo">
-					<a href="site_principal.html"><img src="images2/logo.png"
+					<a href="home.jsp"><img src="images2/logo.png"
 						alt="" /></a>
 				</div>
 				<div class="headertop_desc">
 					<div class="account_desc">
 						<ul>
-							<li><a href="site_menu_carrinho.html"
+							<li><a href="site-menu-carrinho.jsp"
 								style="font-size: 15px">Carrinho</a></li>
-							<li><a href="PesquisarPedido/?operacao=PESQUISAR&view=cliente" style="font-size: 15px">Meus
+							<li><a href="<%=request.getContextPath()%>/MeusPedidos" style="font-size: 15px">Meus
 									Pedidos</a></li>
-							<li><a href="site_meus_cupons.html" style="font-size: 15px">Meus
+							<li><a href="<%=request.getContextPath()%>/MeusCupons" style="font-size: 15px">Meus
 									Cupons</a></li>
 							<li><a
 								href="PreAlterarCliente?operacao=PREALTERAR&view=cliente"
@@ -52,6 +52,9 @@
 				</div>
 			</div>
 		</div>
+		
+		
+		
 		<div class="clear"></div>
 
 		<div class="header_bottom2">
@@ -105,8 +108,7 @@
 			<div class="clear"></div>
 		</div>
 
-
-
+		
 
 		<div class="main">
 			<div class="content">
@@ -125,10 +127,9 @@
 
 						<div class="section group">
 							<div class="grid_1_of_4 images_1_of_4">
-								<a href="preview.html"><img src="images2/feature-pic1.jpg"
+								<a href="preview.html"><img src="/images2/feature-pic1.jpg"
 									alt="" /></a>
 								<h2>${itemProdutos[2]}</h2>
-								<p>${itemProdutos[0]}</p>
 								<div class="price-details">
 									<div class="price-number">
 										<p>
@@ -143,60 +144,7 @@
 									<div class="clear"></div>
 								</div>
 							</div>
-							<div class="grid_1_of_4 images_1_of_4">
-								<a href="preview.html"><img src="images2/feature-pic1.jpg"
-									alt="" /></a>
-								<h2>${itemProdutos[2]}</h2>
-								<div class="price-details">
-									<div class="price-number">
-										<p>
-											<span class="rupees">${itemProdutos[6]}</span>
-										</p>
-									</div>
-									<div class="add-cart">
-										<h4>
-											<a href="site_carrinho.html">Comprar</a>
-										</h4>
-									</div>
-									<div class="clear"></div>
-								</div>
-							</div>
-							<div class="grid_1_of_4 images_1_of_4">
-								<a href="preview.html"><img src="images2/feature-pic1.jpg"
-									alt="" /></a>
-								<h2>${itemProdutos[2]}</h2>
-								<div class="price-details">
-									<div class="price-number">
-										<p>
-											<span class="rupees">${itemProdutos[6]}</span>
-										</p>
-									</div>
-									<div class="add-cart">
-										<h4>
-											<a href="site_carrinho.html">Comprar</a>
-										</h4>
-									</div>
-									<div class="clear"></div>
-								</div>
-							</div>
-							<div class="grid_1_of_4 images_1_of_4">
-								<a href="preview.html"><img src="images2/feature-pic1.jpg"
-									alt="" /></a>
-								<h2>${itemProdutos[2]}</h2>
-								<div class="price-details">
-									<div class="price-number">
-										<p>
-											<span class="rupees">${itemProdutos[6]}</span>
-										</p>
-									</div>
-									<div class="add-cart">
-										<h4>
-											<a href="site_carrinho.html">Comprar</a>
-										</h4>
-									</div>
-									<div class="clear"></div>
-								</div>
-							</div>
+							
 						</div>
 						
 					</c:if>

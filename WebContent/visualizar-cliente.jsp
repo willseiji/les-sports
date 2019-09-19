@@ -84,19 +84,19 @@
                     <ul class="nav nav-list bs-docs-sidenav nav-collapse collapse">
                         
                         <li class="active">
-                            <a href="menu_dados_cliente.html"><i class="icon-chevron-right"></i> Cliente</a>
+                            <a href="menu-cliente.jsp"><i class="icon-chevron-right"></i> Cliente</a>
                         </li>
                         <li class="active">
-                            <a href="menu_produto.jsp"><i class="icon-chevron-right"></i> Produto</a>
+                            <a href="menu-produto.jsp"><i class="icon-chevron-right"></i> Produto</a>
                         </li>
                         <li class="active">
-                            <a href="menu_pedidos.html"><i class="icon-chevron-right"></i> Pedidos</a>
+                            <a href="menu-pedido.jsp"><i class="icon-chevron-right"></i> Pedidos</a>
                         </li>
                         <li class="active">
-                            <a href="menu_trocas.html"><i class="icon-chevron-right"></i> Trocas</a>
+                            <a href="menu-trocas.jsp"><i class="icon-chevron-right"></i> Trocas</a>
                         </li>
                         <li class="active">
-                            <a href="menu_estoque.html"><i class="icon-chevron-right"></i> Estoque</a>
+                            <a href="menu-estoque.jsp"><i class="icon-chevron-right"></i> Estoque</a>
                         </li>
                         <li class="active">
                             <a href="menu_grafico.html"><i class="icon-chevron-right"></i> Gráficos</a>

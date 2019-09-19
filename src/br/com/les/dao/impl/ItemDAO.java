@@ -31,23 +31,24 @@ public class ItemDAO implements IDAO {
 
 		return instance;
 	}
-
+/*
 	public ItemDAO() {
 		em = getEntityManager();
 	}
-
+*/
 	private EntityManager getEntityManager() {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("les");
 
-		if (em == null) {
+//		if (em == null) {
 			em = emf.createEntityManager();
-		}
+//		}
 
 		return em;
 	}
 	
 	@Override
 	public EntidadeDominio salvar(EntidadeDominio entidade) {
+		em = getEntityManager();
 		Item item = (Item) entidade;
 		
 		System.out.println("------------------------");
@@ -64,7 +65,7 @@ public class ItemDAO implements IDAO {
 			ex.printStackTrace();
 			em.getTransaction().rollback();
 		}
-		
+		em.close();
 		return item;
 
 
@@ -73,7 +74,7 @@ public class ItemDAO implements IDAO {
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<EntidadeDominio> pesquisar(EntidadeDominio entidade) {
-
+		em = getEntityManager();
 
 		Item item = (Item) entidade;
 		String filtro = item.getFiltro();
@@ -88,17 +89,22 @@ public class ItemDAO implements IDAO {
 			query.setParameter("paramNome", "%"+filtro+"%");
 
 		List<EntidadeDominio> entidades = query.getResultList();
+		em.close();
 		return entidades;
 
 	}
 
 	@Override
 	public EntidadeDominio prealterar(int id) {
-		return em.find(Item.class, id);
+		em = getEntityManager();
+		Item item =  em.find(Item.class, id);
+		em.close();
+		return item;
 	}
 
 	@Override
 	public void alterar(EntidadeDominio entidade) {
+		em = getEntityManager();
 		Item item = (Item) entidade;
 		System.out.println("------------------------");
 		try {
@@ -109,18 +115,20 @@ public class ItemDAO implements IDAO {
 			ex.printStackTrace();
 			em.getTransaction().rollback();
 		}
+		em.close();
 
 	}
 
 	@Override
 	public void excluir(EntidadeDominio entidade) {
+		em = getEntityManager();
 		// TODO Auto-generated method stub
-
+		em.close();
 	}
 	
 	@SuppressWarnings("unchecked")
 	public List<EntidadeDominio> findByIdPedido(int id_pedido) {
-		
+		em = getEntityManager();
 		System.out.println("id_pedido no findByIdPedido: "+id_pedido);
 		
 		String sql = "FROM " + Item.class.getName(); 
@@ -129,11 +137,16 @@ public class ItemDAO implements IDAO {
 		query.setParameter("paramNome", id_pedido );
 		
 		List<EntidadeDominio> entidades = query.getResultList();
+		em.close();
 		return entidades;
 	}
 	
 	
-	public EntidadeDominio findItem(int id_produto) {
-		return em.find(Item.class, id_produto);
+	public EntidadeDominio findIdProduto(int id_item) {
+		em = getEntityManager();
+		String sql = "FROM " + Item.class.getName()+ " WHERE id_produto = "+id_item; 
+
+		Query query = em.createQuery(sql);
+		return (EntidadeDominio) query.getSingleResult();
 	}
 }

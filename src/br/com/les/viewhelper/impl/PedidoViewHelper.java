@@ -11,14 +11,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import br.com.les.aplicacao.Resultado;
 import br.com.les.dao.impl.PedidoDAO;
 import br.com.les.dao.impl.ProdutoDAO;
 import br.com.les.dominio.impl.Carrinho;
+import br.com.les.dominio.impl.CartaoCredito;
 import br.com.les.dominio.impl.Cliente;
 import br.com.les.dominio.impl.Endereco;
 import br.com.les.dominio.impl.EntidadeDominio;
+import br.com.les.dominio.impl.FormaPagamento;
 import br.com.les.dominio.impl.Item;
+import br.com.les.dominio.impl.ItensCartao;
+import br.com.les.dominio.impl.Pagamento;
 import br.com.les.dominio.impl.Pedido;
 import br.com.les.dominio.impl.Produto;
 import br.com.les.servico.impl.ClienteServico;
@@ -28,17 +36,63 @@ public class PedidoViewHelper implements IViewHelper {
 
 	Pedido pedido = new Pedido();
 	
+	Pagamento pagamento = new Pagamento();
+	FormaPagamento formaPgto = new FormaPagamento();
+	ItensCartao itensCartao = new ItensCartao();
+	CartaoCredito cartao = new CartaoCredito();
+	List<ItensCartao> listaItensCartao = new ArrayList<>();
+	 
 	@Override
 	public EntidadeDominio getEntidade(HttpServletRequest request) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String operacao = request.getParameter("operacao");
-
+		
 		//caso botão apertado foi o de 'value = SALVAR'
 		if (operacao.equals("SALVAR")  ){
 			
 			HttpSession session = request.getSession();
 			pedido = (Pedido) session.getAttribute("pedido");
 			pedido.setStatus("PGTO APROVADO");
+			
+			
+			String valorTotal = request.getParameter("txt_valorTotal");
+			String qtdeParcelas = request.getParameter("txt_qtdeParcelas");
+			String valorParcelas = request.getParameter("txt_valor_Parcelas");
+			String json_cartoes = request.getParameter("txt_json_cartoes");
+			
+			
+			System.out.println("qtdeParcelas: "+qtdeParcelas);
+			System.out.println("valorParcelas: "+valorParcelas);
+			System.out.println("valorTotal: "+valorTotal);
+			System.out.println("json_cartoes: "+json_cartoes);
+			
+			JsonObject jsonCartoes = new JsonParser().parse(json_cartoes).getAsJsonObject();
+			int tamanho = jsonCartoes.getAsJsonArray("itens_cartoes").size();
+			System.out.println("tamanho de itens no json: "+tamanho);
+			
+			for(int i=0;i<tamanho;i++) {
+				JsonObject item_cartao = (JsonObject) jsonCartoes.getAsJsonArray("itens_cartoes").get(i);
+				int id_cartao = item_cartao.getAsJsonObject().get("id").getAsInt();
+				double parcela = item_cartao.getAsJsonObject().get("parcela").getAsDouble();
+				
+				System.out.println("id do cartao: "+id_cartao);
+				System.out.println("parcela do cartao: "+parcela);
+				
+				itensCartao = new ItensCartao();
+				itensCartao.setId_cartao(id_cartao);
+				itensCartao.setValor_parcela_cartao(parcela);
+				listaItensCartao.add(itensCartao);
+			}
+			formaPgto.setQtdeParcelas(Integer.parseInt(qtdeParcelas));
+			formaPgto.setValorParcelas(Double.parseDouble(valorParcelas));
+			formaPgto.setItensCartao(listaItensCartao);
+			
+			pagamento.setTotal(Double.parseDouble(valorTotal));
+			pagamento.setFormaPgto(formaPgto);
+			
+			pedido.setPagamento(pagamento);
+			
+			
 			
 			
 			
@@ -202,7 +256,9 @@ public class PedidoViewHelper implements IViewHelper {
 			List<List<String>> listaEnderecos = new java.util.ArrayList<List<String>>();
 			List<String> itensItem = null;
 			List<List<String>> listaItens = new java.util.ArrayList<List<String>>();
-
+			List<String> itensCartao = null;
+			List<List<String>> listaCartoes = new java.util.ArrayList<List<String>>();
+			
 
 
 			request.getSession().setAttribute("resultado", resultado);
@@ -275,6 +331,7 @@ public class PedidoViewHelper implements IViewHelper {
 	            	System.out.println("cidade: "+endereco.getCidade().getNome());
 	            	System.out.println("estado: "+endereco.getCidade().getEstado().getNome());
 	            	System.out.println("tipo endereco: "+endereco.getTipoEndereco());
+	            	System.out.println("principal: "+endereco.getPrincipal());
 	            	
 					
                 	itensEndereco = new java.util.ArrayList<String>();
@@ -287,26 +344,48 @@ public class PedidoViewHelper implements IViewHelper {
 	                itensEndereco.add(endereco.getCidade().getNome());
 	                itensEndereco.add(endereco.getCidade().getEstado().getNome());
 	                itensEndereco.add(endereco.getTipoEndereco());
+	                itensEndereco.add(endereco.getPrincipal());
 	                
 	                listaEnderecos.add(itensEndereco);
                 }//for
                 
 				
+				for (int i = 0; i < cliente.getCartoes().size(); i++) {
+					
+					CartaoCredito cartao = cliente.getCartoes().get(i);
+
+					
+					System.out.println("------------------------");
+					System.out.println("id_cartao: "+cartao.getId());
+	            	System.out.println("bandeira: "+cartao.getBandeira());
+	            	System.out.println("numero: "+cartao.getNumero());
+	            	System.out.println("codigo seguranca: "+cartao.getCodigoSeguranca());
+	            	System.out.println("validade: "+cartao.getDataValidade());
+	            	System.out.println("nome titular: "+cartao.getNomeTitular());
+	            		
+                	itensCartao = new java.util.ArrayList<String>();
+                	itensCartao.add(Integer.toString(cartao.getId()));
+                	itensCartao.add(cartao.getBandeira());
+                	itensCartao.add(cartao.getNumero());
+                	itensCartao.add(cartao.getCodigoSeguranca());
+                	itensCartao.add(cartao.getDataValidade());
+                	itensCartao.add(cartao.getNomeTitular());
+                	
+	                
+	                listaCartoes.add(itensCartao);
+                }//for
+                
+				
+				
 				for (int i = 0; i < pedido.getItens().size(); i++) {
 					
 					Item item = pedido.getItens().get(i);
-					
-					/*System.out.println("------------------------");
-					System.out.println("id_endereco: "+endereco.getId());
-	            	System.out.println("rua: "+endereco.getRua());
-	            	System.out.println("numero: "+endereco.getRua());
-	            	System.out.println("complemento: "+endereco.getComplemento());
-	            	System.out.println("bairro: "+endereco.getBairro());
-	            	System.out.println("cep: "+endereco.getCep());
-	            	System.out.println("cidade: "+endereco.getCidade().getNome());
-	            	System.out.println("estado: "+endereco.getCidade().getEstado().getNome());
-	            	System.out.println("tipo endereco: "+endereco.getTipoEndereco());
-	            	*/
+					Produto produto = item.getProduto();
+					System.out.println("produto: "+produto);
+					System.out.println("id_item: "+item.getId());
+					System.out.println("id_produto: "+produto.getId());
+	            	System.out.println("codigo produto: "+produto.getCodigoProd());
+	            	
 					
                 	itensItem = new java.util.ArrayList<String>();
                 	itensItem.add(Integer.toString(item.getId()));
@@ -319,7 +398,8 @@ public class PedidoViewHelper implements IViewHelper {
                 	itensItem.add(Integer.toString(item.getQtde()));
                 	itensItem.add(Double.toString(item.getProduto().getPreco()));
                 	itensItem.add(Double.toString(item.getSubTotal()));
-                	
+                	itensItem.add(Integer.toString(item.getProduto().getId()));
+                	System.out.println("ID ---- :"+itensItem.get(0));
                 	
 	                listaItens.add(itensItem);
                 }//for
@@ -329,10 +409,11 @@ public class PedidoViewHelper implements IViewHelper {
 				request.setAttribute("itensCliente", itensCliente);
 				request.setAttribute("listaEnderecos", listaEnderecos);
 				request.setAttribute("listaItens", listaItens);
+				request.setAttribute("listaCartoes", listaCartoes);
 				response.setContentType("text/html;charset=UTF-8");
 				if(view.equals("cliente")) {
 					try {
-						request.getRequestDispatcher("site-detalhes-pedido.jsp").forward(request, response);
+						request.getRequestDispatcher("site-trocas.jsp").forward(request, response);
 					} catch (ServletException ex) {
 						Logger.getLogger(ProdutoViewHelper.class.getName()).log(Level.SEVERE, null, ex);
 					}

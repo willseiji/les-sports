@@ -23,8 +23,6 @@ public class Cliente extends EntidadeDominio{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_cliente")
 	private int id;
-	@Transient
-	private String data;
 	@Column(name="codigo")
 	private String codigo;
 	@Column(name="nome")
@@ -43,12 +41,21 @@ public class Cliente extends EntidadeDominio{
 	private String email;
 	@Column(name="status")
 	private String status;
-	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_usuario")
+	//@OneToOne(cascade = CascadeType.ALL)
+    //@JoinColumn(name = "id_usuario")
+	@Transient
 	private Usuario usuario;
 	//@OneToMany(mappedBy="cliente",cascade=CascadeType.ALL,fetch = FetchType.EAGER)
 	@Transient
 	private List<Endereco> enderecos;
+	
+	@Transient
+	private List<CartaoCredito> cartoes;
+	
+	
+	
+	@Column(name="id_usuario")
+	private int id_usuario;
 	
 	
 	public int getId() {
@@ -59,13 +66,6 @@ public class Cliente extends EntidadeDominio{
 		this.id = id;
 	}
 
-	public String getData() {
-		return data;
-	}
-
-	public void setData(String data) {
-		this.data = data;
-	}
 
 	public String getCodigo() {
 		return codigo;
@@ -153,6 +153,22 @@ public class Cliente extends EntidadeDominio{
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public int getId_usuario() {
+		return id_usuario;
+	}
+
+	public void setId_usuario(int id_usuario) {
+		this.id_usuario = id_usuario;
+	}
+
+	public List<CartaoCredito> getCartoes() {
+		return cartoes;
+	}
+
+	public void setCartoes(List<CartaoCredito> cartoes) {
+		this.cartoes = cartoes;
 	}
 
 	

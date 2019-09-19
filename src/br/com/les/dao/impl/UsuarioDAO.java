@@ -33,34 +33,37 @@ public class UsuarioDAO implements IDAO {
 
 		return instance;
 	}
-
+/*
 	public UsuarioDAO() {
 		em = getEntityManager();
 	}
-
+*/
 	private EntityManager getEntityManager() {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("les");
 
-		if (em == null) {
+//		if (em == null) {
 			em = emf.createEntityManager();
-		}
+		//}
 
 		return em;
 	}
 
 	@Override
 	public EntidadeDominio salvar(EntidadeDominio entidade) {
+		em = getEntityManager();
 		Usuario usuario = (Usuario) entidade;
 		
 		try {
 			em.getTransaction().begin();
 			em.persist(usuario);
 			em.flush();
-			em.getTransaction().commit();
+			em.getTransaction().commit();			
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			em.getTransaction().rollback();
+			
 		}
+		em.close();
 
 		return usuario;
 
@@ -70,34 +73,36 @@ public class UsuarioDAO implements IDAO {
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<EntidadeDominio> pesquisar(EntidadeDominio entidade) {
-
+		em = getEntityManager();
 		Usuario u = (Usuario) entidade;
-		String filtro = u.getNome();
+		String nome = u.getNome();
+		String senha = u.getSenha();
 
 
-		String sql = "FROM " + Usuario.class.getName(); 
-		if(filtro!="") {
-			sql =sql + " WHERE nome like :paramNome"
-					;
-		}
+		String sql = "FROM " + Usuario.class.getName() + " WHERE nome like :paramNome and senha like: paramSenha"; 
+		
 		Query query = em.createQuery(sql);
-		if(filtro!="") 
-			query.setParameter("paramNome", "%"+filtro+"%");
+		query.setParameter("paramNome", "%"+nome+"%");
+		query.setParameter("paramSenha", "%"+senha+"%");
 
 		List<EntidadeDominio> entidades = query.getResultList();
+		em.close();
 		return entidades;
 
 	}
 
 	@Override
 	public EntidadeDominio prealterar(int id) {
-
-		return em.find(Usuario.class, id);
+		em = getEntityManager();
+		Usuario usuario =  em.find(Usuario.class, id);
+		em.close();
+		return usuario;
 
 	}
 
 	@Override
 	public void alterar(EntidadeDominio entidade) {
+		em = getEntityManager();
 		Usuario usuario = (Usuario) entidade;
 		
 
@@ -105,17 +110,20 @@ public class UsuarioDAO implements IDAO {
 			em.getTransaction().begin();
 			em.merge(usuario);
 			em.getTransaction().commit();
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			em.getTransaction().rollback();
+			
 		}
-
+		em.close();
 	}
 
 	@Override
 	public void excluir(EntidadeDominio entidade) {
+		em = getEntityManager();
 		// TODO Auto-generated method stub
-
+		em.close();
 	}
 
 

@@ -29,10 +29,9 @@ public class Usuario extends EntidadeDominio{
 	@Column(name="codigo_cliente")
 	private String codCliente;
 	*/
-	@OneToOne(mappedBy = "usuario")
+	//@OneToOne(mappedBy = "usuario")
+	@Transient
 	private Cliente cliente;
-	
-	
 	
 	public int getId() {
 		return id;

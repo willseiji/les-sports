@@ -30,33 +30,36 @@ public class ProdutoDAO implements IDAO {
 		return instance;
 	}
 
-	public ProdutoDAO() {
-		em = getEntityManager();
-	}
+	//public ProdutoDAO() {
+		//em = getEntityManager();
+//	}
 
 	private EntityManager getEntityManager() {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("les");
 
-		if (em == null) {
+//		if (em == null) {
 			em = emf.createEntityManager();
-		}
+//		}
 
 		return em;
 	}
 
 	@Override
 	public EntidadeDominio salvar(EntidadeDominio entidade) {
+		em = getEntityManager();
 		Produto produto = (Produto) entidade;
 		try {
 			em.getTransaction().begin();
 			em.persist(produto);
 			em.flush();
 			em.getTransaction().commit();
+			
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			em.getTransaction().rollback();
+			
 		}
-
+		em.close();
 		return produto;
 
 
@@ -65,7 +68,7 @@ public class ProdutoDAO implements IDAO {
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<EntidadeDominio> pesquisar(EntidadeDominio entidade) {
-
+		em = getEntityManager();
 		Produto p = (Produto) entidade;
 		String filtro = p.getDescricao();
 
@@ -81,18 +84,23 @@ public class ProdutoDAO implements IDAO {
 			query.setParameter("paramNome", "%"+filtro+"%");
 
 		List<EntidadeDominio> entidades = query.getResultList();
+		em.close();
 		return entidades;
 
 	}
 
 	@Override
 	public EntidadeDominio prealterar(int id) {
-		return em.find(Produto.class, id);
+		em = getEntityManager();
+		Produto produto = em.find(Produto.class, id);
+		em.close();
+		return produto;
 
 	}
 
 	@Override
 	public void alterar(EntidadeDominio entidade) {
+		em = getEntityManager();
 		Produto produto = (Produto) entidade;
 
 		try {
@@ -103,13 +111,15 @@ public class ProdutoDAO implements IDAO {
 			ex.printStackTrace();
 			em.getTransaction().rollback();
 		}
+		em.close();
 
 	}
 
 	@Override
 	public void excluir(EntidadeDominio entidade) {
+		em = getEntityManager();
 		// TODO Auto-generated method stub
-
+		em.close();
 	}
 
 }

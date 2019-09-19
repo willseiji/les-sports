@@ -37,12 +37,18 @@ public class Item extends EntidadeDominio {
 	@Column(name="subTotal")
 	private double subTotal;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_produto")
+	//@OneToOne(cascade = CascadeType.ALL)
+    //@JoinColumn(name = "id_produto")
+	@Transient
 	private Produto produto;
+	
+	@Column(name="id_produto")
+	private int id_produto;
 	
 	@Column(name="id_pedido")
 	private int id_pedido;
+	
+	
 	
 	public int getId() {
 		return id;
@@ -94,6 +100,12 @@ public class Item extends EntidadeDominio {
 	}
 	public void setCodigo(String codigo) {
 		this.codigo = codigo;
+	}
+	public int getId_produto() {
+		return id_produto;
+	}
+	public void setId_produto(int id_produto) {
+		this.id_produto = id_produto;
 	}
 	
 	

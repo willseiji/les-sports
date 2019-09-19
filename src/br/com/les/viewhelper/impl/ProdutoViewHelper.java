@@ -32,6 +32,8 @@ public class ProdutoViewHelper implements IViewHelper {
 		produto.setCategoria("");
 		produto.setFabricante("");
 		produto.setDescricao("");
+		produto.setPreco(0);
+		produto.setQuantidade(0);
 		produto.setStatus("INATIVO");
 
 		//caso botão apertado foi o de 'value = SALVAR'
@@ -45,6 +47,8 @@ public class ProdutoViewHelper implements IViewHelper {
 			String nmCategoria = (request.getParameter("txt_Categoria"));
 			String nmFabricante = (request.getParameter("txt_Fabricante"));
 			String nmDescricao = request.getParameter("txt_Descricao");
+			String nmPreco = request.getParameter("txt_Preco");
+			String nmQuantidade = request.getParameter("txt_Quantidade");
 			
 			
 			if(!nmProduto.isEmpty()||!nmProduto.trim().equals("")){
@@ -69,6 +73,12 @@ public class ProdutoViewHelper implements IViewHelper {
 			}
 			if (!nmFabricante.isEmpty()||!nmFabricante.trim().equals("")) {
 				produto.setFabricante(nmFabricante);
+			}
+			if (!nmPreco.isEmpty()||!nmPreco.trim().equals("")) {
+				produto.setPreco(Double.parseDouble(nmPreco));
+			}
+			if (!nmQuantidade.isEmpty()||!nmQuantidade.trim().equals("")) {
+				produto.setQuantidade(Integer.parseInt(nmQuantidade));
 			}
 			
 			System.out.println("mat: "+produto.getMaterial());

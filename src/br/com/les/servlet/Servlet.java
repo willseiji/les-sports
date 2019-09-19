@@ -20,10 +20,13 @@ import br.com.les.command.impl.PreAlterarCommand;
 import br.com.les.command.impl.SalvarCommand;
 import br.com.les.dominio.impl.EntidadeDominio;
 import br.com.les.viewhelper.IViewHelper;
+import br.com.les.viewhelper.impl.CartaoViewHelper;
 import br.com.les.viewhelper.impl.ClienteViewHelper;
+import br.com.les.viewhelper.impl.CupomViewHelper;
 import br.com.les.viewhelper.impl.EnderecoViewHelper;
 import br.com.les.viewhelper.impl.PedidoViewHelper;
 import br.com.les.viewhelper.impl.ProdutoViewHelper;
+import br.com.les.viewhelper.impl.TrocaViewHelper;
 
 
 /**
@@ -72,8 +75,29 @@ public class Servlet extends HttpServlet {
           vhs.put("/les-codigo/PesquisarPedido", new PedidoViewHelper());
           vhs.put("/les-codigo/ExcluirPedido", new PedidoViewHelper());
           vhs.put("/les-codigo/PreAlterarPedido", new PedidoViewHelper());
-          vhs.put("/les-codigo/AlterarEndereco", new PedidoViewHelper());
+          vhs.put("/les-codigo/AlterarPedido", new PedidoViewHelper());
           
+
+          //mapeando URI com tipo de instância de endereco para View Helper
+          vhs.put("/les-codigo/CadastrarCartao", new CartaoViewHelper());
+          vhs.put("/les-codigo/PesquisarCartao", new CartaoViewHelper());
+          vhs.put("/les-codigo/ExcluirCartao", new CartaoViewHelper());
+          vhs.put("/les-codigo/PreAlterarCartao", new CartaoViewHelper());
+          vhs.put("/les-codigo/AlterarCartao", new CartaoViewHelper());
+
+          //mapeando URI com tipo de instância de troca para View Helper
+          vhs.put("/les-codigo/CadastrarTroca", new TrocaViewHelper());
+          vhs.put("/les-codigo/PesquisarTroca", new TrocaViewHelper());
+          vhs.put("/les-codigo/ExcluirTroca", new TrocaViewHelper());
+          vhs.put("/les-codigo/PreAlterarTroca", new TrocaViewHelper());
+          vhs.put("/les-codigo/AlterarTroca", new TrocaViewHelper());
+
+          //mapeando URI com tipo de instância de troca para View Helper
+          vhs.put("/les-codigo/CadastrarCupom", new CupomViewHelper());
+          vhs.put("/les-codigo/PesquisarCupom", new CupomViewHelper());
+          vhs.put("/les-codigo/ExcluirCupom", new CupomViewHelper());
+          vhs.put("/les-codigo/PreAlterarCupom", new CupomViewHelper());
+          vhs.put("/les-codigo/AlterarCupom", new CupomViewHelper());
           
           //mapeando 'operação' com instância para Command
           commands = new HashMap<String, ICommand>();
